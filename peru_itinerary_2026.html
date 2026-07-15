@@ -198,6 +198,7 @@
     .legend-line.flight { border-color: var(--blue); border-top-style: dashed; }
     .legend-line.rail { border-color: var(--red); }
     .legend-line.road { border-color: var(--gold); }
+    .legend-line.boat { border-color: #287f83; }
 
     .route-map-shell {
       position: relative;
@@ -267,6 +268,48 @@
     .stat { min-height: 116px; padding: 22px; background: var(--paper); }
     .stat strong { display: block; font-size: 31px; line-height: 1.1; }
     .stat span { display: block; margin-top: 8px; color: var(--muted); font-size: 13px; }
+
+    .budget {
+      padding: 76px 0 84px;
+      color: #fff;
+      background: #171a1d;
+    }
+    .budget-heading {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(300px, .9fr);
+      gap: 64px;
+      align-items: end;
+    }
+    .budget .section-kicker { color: #f2bd50; }
+    .budget .lead { color: #bfc5ca; }
+    .budget-summary {
+      margin-top: 38px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-top: 1px solid #4b5156;
+      border-bottom: 1px solid #4b5156;
+    }
+    .budget-total { padding: 24px 24px 26px; }
+    .budget-total + .budget-total { border-left: 1px solid #4b5156; }
+    .budget-total span { display: block; color: #b6bdc2; font-size: 12px; font-weight: 750; }
+    .budget-total strong { display: block; margin-top: 7px; font-size: 32px; line-height: 1.1; }
+    .budget-total small { display: block; margin-top: 8px; color: #858e95; font-size: 11px; }
+    .budget-breakdown { margin-top: 42px; }
+    .budget-breakdown h3 { margin: 0 0 8px; font-size: 16px; }
+    .budget-row {
+      display: grid;
+      grid-template-columns: 210px minmax(160px, 1fr) 90px;
+      gap: 22px;
+      align-items: center;
+      min-height: 46px;
+      border-bottom: 1px solid #343a3f;
+      font-size: 13px;
+    }
+    .budget-row > span:first-child { color: #d7dbde; }
+    .budget-row strong { text-align: right; }
+    .budget-track { height: 7px; background: #343a3f; }
+    .budget-track i { display: block; width: var(--share); height: 100%; background: #bd8d2b; }
+    .budget-note { margin: 22px 0 0; color: #9ca4aa; font-size: 12px; line-height: 1.7; }
 
     .journey { padding-top: 72px; }
     .journey-intro { padding-bottom: 52px; }
@@ -412,23 +455,405 @@
     .credits a { color: #d9dde1; }
     .credits p { margin: 0 0 8px; }
 
+    /* Paginated magazine workspace */
+    body { overflow: hidden; }
+
+    .topbar { height: 106px; }
+    .topbar-inner { height: 58px; }
+    .topnav { gap: 9px; }
+
+    .workspace-tabs {
+      width: min(calc(100% - 32px), var(--max));
+      height: 48px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      border-top: 1px solid rgba(255, 255, 255, .13);
+    }
+    .workspace-tab {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 0 10px;
+      color: rgba(255, 255, 255, .62);
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 750;
+    }
+    .workspace-tab svg { width: 15px; height: 15px; }
+    .workspace-tab::after {
+      content: "";
+      position: absolute;
+      inset: auto 12px 0;
+      height: 3px;
+      background: #f2bd50;
+      transform: scaleX(0);
+      transition: transform .2s ease;
+    }
+    .workspace-tab:hover,
+    .workspace-tab:focus-visible,
+    .workspace-tab[aria-selected="true"] { color: #fff; }
+    .workspace-tab[aria-selected="true"]::after { transform: scaleX(1); }
+
+    .tab-workspace {
+      height: calc(100dvh - 106px);
+      margin-top: 106px;
+      overflow: hidden;
+      background: var(--paper);
+    }
+    .tab-panel { display: none; height: 100%; overflow: hidden; }
+    .tab-panel.is-active { display: block; animation: panelIn .28s ease both; }
+    @keyframes panelIn { from { opacity: .2; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+    #panel-highlights.is-active { display: block; overflow: auto; }
+    #panel-highlights .hero {
+      min-height: 72vh;
+      height: auto;
+      border-right: 0;
+      border-bottom: 5px solid var(--red);
+    }
+    #panel-highlights .hero-inner {
+      width: min(calc(100% - 64px), var(--max));
+      padding: 70px 0 58px;
+    }
+    #panel-highlights h1 { font-size: clamp(48px, 6vw, 80px); }
+    #panel-highlights .overview { height: auto; padding: 58px 0 72px; overflow: visible; }
+    #panel-highlights .overview .section-inner { width: min(calc(100% - 64px), var(--max)); }
+    #panel-highlights h2 { font-size: clamp(34px, 4vw, 58px); }
+    #panel-highlights .map-heading { display: block; }
+    #panel-highlights .map-legend { margin-top: 14px; justify-content: flex-start; }
+    #panel-highlights .route-map-shell { margin-top: 20px; }
+    #panel-highlights #routeMap { height: clamp(460px, 62vh, 680px); }
+    #panel-highlights .stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    #panel-highlights .stat { min-height: 86px; padding: 14px; }
+    #panel-highlights .stat strong { font-size: 22px; }
+    #panel-highlights .stat span { margin-top: 5px; font-size: 10px; }
+    .highlight-extract {
+      margin-top: 30px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .highlight-item {
+      --accent: var(--red);
+      min-height: 0;
+      padding: 21px 22px 20px;
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-top: 4px solid var(--accent);
+      box-shadow: 0 7px 20px rgba(23, 25, 28, .045);
+    }
+    .highlight-item:nth-child(1) { --accent: #2d6a43; }
+    .highlight-item:nth-child(2) { --accent: #a92727; }
+    .highlight-item:nth-child(3) { --accent: #b37917; }
+    .highlight-item:nth-child(4) { --accent: #287f83; }
+    .highlight-item:nth-child(5) { --accent: #2f5e8d; }
+    .highlight-item:nth-child(6) { --accent: #7a4b31; }
+    .highlight-number {
+      color: var(--accent);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .highlight-item strong {
+      display: block;
+      margin-top: 10px;
+      min-height: 54px;
+      font-family: Georgia, "Noto Serif SC", serif;
+      font-size: 19px;
+      line-height: 1.42;
+    }
+    .highlight-item p { min-height: 76px; margin: 10px 0 0; color: var(--muted); font-size: 11px; line-height: 1.72; }
+    .highlight-link {
+      width: fit-content;
+      margin-top: 13px;
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 850;
+      line-height: 1.4;
+      text-decoration: none;
+      border-bottom: 1px solid color-mix(in srgb, var(--accent) 42%, transparent);
+    }
+    .highlight-link:hover,
+    .highlight-link:focus-visible { border-bottom-color: currentColor; }
+    .highlight-image {
+      flex: 0 0 218px;
+      height: 218px;
+      margin: 18px -22px -20px;
+      overflow: hidden;
+      background: #d7dcde;
+      border-top: 1px solid var(--line);
+    }
+    .highlight-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(1.06) contrast(1.04);
+      transition: transform .55s ease, filter .55s ease;
+    }
+    .highlight-item:nth-child(1) .highlight-image img { object-position: center 68%; transform: scale(1.08); }
+    .highlight-item:nth-child(3) .highlight-image img { object-position: center 57%; transform: scale(1.08); }
+    .highlight-item:nth-child(6) .highlight-image img { object-position: center 82%; }
+    .highlight-item:hover .highlight-image img { transform: scale(1.12); filter: saturate(1.13) contrast(1.07); }
+    .highlight-item:nth-child(6):hover .highlight-image img { transform: scale(1.035); }
+
+    #panel-daily.is-active { display: block; }
+    .daily-shell { height: 100%; display: grid; grid-template-columns: 128px minmax(0, 1fr); }
+    .day-rail {
+      height: 100%;
+      padding: 18px 10px;
+      overflow: auto;
+      background: #191d20;
+      border-right: 1px solid #343a3f;
+      scrollbar-width: thin;
+    }
+    .day-button {
+      width: 100%;
+      min-height: 68px;
+      margin: 0 0 7px;
+      padding: 9px 8px 9px 11px;
+      color: #9da5ab;
+      background: transparent;
+      border: 0;
+      border-left: 3px solid transparent;
+      cursor: pointer;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .day-button span { display: block; margin-top: 5px; color: #778087; font-size: 9px; font-weight: 650; line-height: 1.35; }
+    .day-button:hover,
+    .day-button:focus-visible,
+    .day-button.is-active { color: #fff; background: #252b30; border-left-color: #f2bd50; }
+    .day-button.is-active span { color: #d3d7da; }
+    .daily-pages { height: 100%; overflow: auto; scrollbar-width: thin; }
+    #panel-daily .journey { display: none; }
+    #panel-daily .story-chapter { display: none; min-height: 100%; height: auto; border-top: 0; }
+    #panel-daily .story-chapter.is-active { display: block; }
+    #panel-daily .story-layout {
+      min-height: 100%;
+      height: auto;
+      width: 100%;
+      padding: 34px clamp(30px, 4vw, 68px);
+      grid-template-columns: minmax(0, 1.02fr) minmax(360px, .98fr);
+      gap: clamp(32px, 5vw, 78px);
+      align-items: start;
+      overflow: visible;
+    }
+    #panel-daily .story-copy { min-height: 0; overflow: visible; padding-right: 8px; }
+    #panel-daily .story-copy h2 { font-size: clamp(30px, 3.6vw, 48px); }
+    #panel-daily .chapter-deck { font-size: 13px; }
+    #panel-daily .chapter-meta { margin-top: 15px; }
+    #panel-daily .story-days { margin-top: 20px; }
+    #panel-daily .story-day { display: grid; padding: 20px 0 0; border-top: 1px solid #cfd3d6; }
+    #panel-daily .story-visual { position: sticky; top: 34px; height: calc(100dvh - 174px); max-height: 720px; }
+    #panel-daily .story-visual figure { height: 100%; min-height: 0; }
+    #panel-daily .story-visual.duo { height: 100%; grid-template-rows: repeat(2, minmax(0, 1fr)) auto; }
+    #panel-daily .story-visual.duo figure { height: 100%; min-height: 0; }
+    #panel-daily .visual-caption { margin-top: 8px; }
+
+    #panel-costs,
+    #panel-culture,
+    #panel-checklist { background: var(--surface); }
+    #panel-costs.is-active,
+    #panel-culture.is-active,
+    #panel-checklist.is-active { display: block; overflow: auto; }
+    .panel-inner { width: min(calc(100% - 48px), var(--max)); margin: 0 auto; padding: 42px 0 54px; }
+    .panel-heading { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, .72fr); gap: 56px; align-items: end; }
+    .panel-heading .lead { margin: 0; }
+
+    .budget { min-height: 100%; padding: 0; color: var(--ink); background: var(--surface); }
+    .budget .section-kicker { color: var(--red); }
+    .budget .lead { color: var(--muted); }
+    .budget-options {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .budget-option { padding: 22px 24px; background: #fff; border: 1px solid var(--line); border-top: 4px solid var(--teal); }
+    .budget-option.pretty { border-top-color: var(--red); }
+    .budget-option small { display: block; color: var(--muted); font-size: 11px; font-weight: 800; text-transform: uppercase; }
+    .budget-option strong { display: block; margin-top: 7px; font-family: Georgia, "Noto Serif SC", serif; font-size: 30px; }
+    .budget-option p { margin: 8px 0 0; color: var(--muted); font-size: 12px; }
+    .cost-columns { margin-top: 18px; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(300px, .75fr); gap: 16px; }
+    .cost-card { background: #fff; border: 1px solid var(--line); }
+    .cost-card h3 { margin: 0; padding: 17px 20px; border-bottom: 1px solid var(--line); font-size: 16px; }
+    .cost-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+    .cost-table th, .cost-table td { padding: 13px 20px; border-bottom: 1px solid #e5e8ea; text-align: left; vertical-align: top; font-size: 12px; }
+    .cost-table tr:last-child th, .cost-table tr:last-child td { border-bottom: 0; }
+    .cost-table th { width: 118px; color: var(--ink); font-weight: 850; }
+    .cost-table td { color: var(--muted); }
+    .pretty-meals { margin-top: 22px; display: grid; grid-template-columns: 1fr; gap: 16px; }
+    .meal-note { display: grid; grid-template-columns: minmax(280px, .78fr) minmax(0, 1.22fr); overflow: hidden; background: #fff; border: 1px solid var(--line); }
+    .meal-photo { position: relative; display: block; min-height: 300px; overflow: hidden; background: #d9d9d6; }
+    .meal-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .55s ease; }
+    .meal-photo video { display: block; width: 100%; height: 100%; min-height: inherit; object-fit: cover; background: #111; }
+    .meal-note.video-note { grid-template-columns: minmax(220px, .58fr) minmax(0, 1.42fr); align-items: center; }
+    .video-note .meal-photo { height: 420px; min-height: 0; }
+    .meal-photo:hover img { transform: scale(1.035); }
+    .meal-photo small { position: absolute; right: 8px; bottom: 8px; padding: 4px 6px; color: #fff; background: rgba(16,18,19,.72); font-size: 8px; letter-spacing: .08em; }
+    .video-source { position: absolute; z-index: 2; top: 10px; right: 10px; padding: 6px 8px; color: #fff; background: rgba(16,18,19,.76); border: 1px solid rgba(255,255,255,.42); font-size: 9px; font-weight: 800; text-decoration: none; backdrop-filter: blur(7px); }
+    .video-source:hover { background: var(--red); }
+    .meal-copy { align-self: center; padding: 28px 30px 30px; }
+    .meal-note strong { display: block; font-family: Georgia, "Noto Serif SC", serif; font-size: 22px; line-height: 1.35; }
+    .meal-note span { display: block; margin-top: 4px; color: var(--red); font-size: 10px; font-weight: 850; text-transform: uppercase; }
+    .meal-note p { margin: 10px 0 0; color: var(--muted); font-size: 13px; line-height: 1.75; }
+    .meal-link { display: inline-flex; align-items: center; gap: 5px; margin: 14px 14px 0 0; color: var(--ink); font-size: 10px; font-weight: 850; text-decoration: none; }
+    .meal-link:hover { color: var(--red); }
+    .budget-note { color: var(--muted); }
+
+    .culture-grid {
+      margin-top: 30px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .culture-column { min-height: 0; padding: 24px; background: #fff; border: 1px solid var(--line); }
+    .culture-column > i { width: 22px; height: 22px; color: var(--red); }
+    .culture-column h3 { margin: 16px 0 18px; font-family: Georgia, "Noto Serif SC", serif; font-size: 22px; }
+    .culture-stack { display: grid; gap: 14px; }
+    .culture-card-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .culture-card-grid.works { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .culture-item { overflow: hidden; margin: 0; padding: 0 0 14px; border: 1px solid var(--line); background: #fafafa; }
+    .culture-cover { display: block; aspect-ratio: 16 / 9; overflow: hidden; background: #d9d9d6; }
+    .culture-cover img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+    .culture-cover.book-cover, .culture-cover.poster-cover { aspect-ratio: 2 / 3; }
+    .culture-cover.book-cover img { object-fit: cover; }
+    .culture-cover.poster-cover img { object-fit: cover; }
+    .culture-cover:hover img { transform: scale(1.04); }
+    .culture-copy { padding: 12px 12px 0; }
+    .culture-item a, .culture-item strong { display: block; font-size: 13px; font-weight: 850; text-decoration: none; }
+    .culture-item a:hover { color: var(--red); }
+    .culture-item span { display: block; margin-top: 5px; color: var(--muted); font-size: 11px; line-height: 1.55; }
+    .culture-rating { color: #a66700 !important; font-weight: 800; }
+    .culture-rating b { color: var(--red); font-size: 13px; }
+    .culture-action { display: inline-flex !important; align-items: center; gap: 4px; margin-top: 9px; color: var(--red); font-size: 10px !important; }
+    .spotify-player { overflow: hidden; border: 1px solid var(--line); background: #f4f5f5; }
+    .spotify-player iframe { display: block; width: 100%; height: 152px; border: 0; }
+    .podcast-item { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 16px; padding: 14px; }
+    .podcast-art { width: 92px; aspect-ratio: 1; object-fit: cover; }
+    .podcast-copy strong { font-size: 13px; line-height: 1.45; }
+    .podcast-copy span { margin-top: 6px; }
+    .podcast-copy audio { width: 100%; height: 34px; margin-top: 12px; }
+    .culture-duration { margin-top: 24px; color: var(--muted); font-size: 11px; }
+
+    .checklist-layout { margin-top: 28px; display: grid; grid-template-columns: minmax(260px, .34fr) minmax(0, .66fr); gap: 18px; }
+    .readiness-card { padding: 26px; color: #fff; background: #1d2226; }
+    .readiness-card strong { display: block; font-size: 46px; line-height: 1; }
+    .readiness-card span { display: block; margin-top: 9px; color: #bfc5ca; font-size: 12px; }
+    .progress-track { height: 6px; margin-top: 24px; background: #3a4147; }
+    .progress-track i { display: block; width: 0; height: 100%; background: #f2bd50; transition: width .25s ease; }
+    .check-groups { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .check-group { padding: 18px; background: #fff; border: 1px solid var(--line); }
+    .check-group h3 { margin: 0 0 12px; font-size: 14px; }
+    .check-item { min-height: 38px; display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-top: 1px solid #e7e9eb; color: var(--muted); font-size: 11px; cursor: pointer; }
+    .check-item input { flex: 0 0 auto; width: 16px; height: 16px; margin: 1px 0 0; accent-color: var(--red); }
+    .check-item:has(input:checked) { color: #8a9197; text-decoration: line-through; }
+
+    .opening-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: grid;
+      background: #071016;
+      transition: opacity .55s ease, visibility .55s ease;
+    }
+    .opening-overlay.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    .opening-frame { width: 100%; height: 100%; border: 0; }
+    .opening-enter {
+      position: absolute;
+      left: 50%;
+      bottom: clamp(24px, 5vh, 54px);
+      z-index: 2;
+      min-width: 148px;
+      height: 44px;
+      padding: 0 20px;
+      color: #fff;
+      background: rgba(10, 17, 20, .68);
+      border: 1px solid rgba(255, 255, 255, .62);
+      border-radius: 4px;
+      backdrop-filter: blur(9px);
+      transform: translateX(-50%);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .08em;
+    }
+    .opening-enter:hover, .opening-enter:focus-visible { background: rgba(255, 255, 255, .16); }
+
+    .contact-dialog {
+      width: min(calc(100% - 32px), 520px);
+      padding: 0;
+      color: var(--ink);
+      background: #fff;
+      border: 0;
+      border-radius: 8px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, .34);
+    }
+    .contact-dialog::backdrop { background: rgba(7, 11, 14, .72); backdrop-filter: blur(4px); }
+    .contact-dialog-inner { position: relative; padding: 22px; }
+    .contact-dialog h2 { margin: 0; font-size: 25px; }
+    .contact-dialog p { margin: 4px 44px 18px 0; color: var(--muted); font-size: 12px; }
+    .contact-dialog img { width: 100%; max-height: min(68vh, 620px); object-fit: contain; border: 1px solid var(--line); background: #f7f7f7; }
+    .contact-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      color: var(--ink);
+      background: #f2f3f4;
+      border: 0;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .contact-close svg { width: 18px; height: 18px; }
+
     @media (max-width: 900px) {
       .topnav a { display: none; }
-      .hero { min-height: 78vh; }
+      #panel-highlights.is-active { display: block; overflow: auto; }
+      #panel-highlights .hero { min-height: 66vh; height: auto; border-right: 0; border-bottom: 5px solid var(--red); }
+      #panel-highlights .overview { height: auto; overflow: visible; }
       .map-heading { align-items: start; flex-direction: column; }
       .map-legend { justify-content: flex-start; }
       #routeMap { height: 540px; }
       .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .story-layout { grid-template-columns: 1fr; gap: 42px; }
-      .story-visual { position: relative; top: auto; order: -1; }
-      .story-visual figure { height: min(70vh, 590px); min-height: 390px; }
-      .story-visual.duo { grid-template-columns: 1fr; }
-      .story-visual.duo figure { height: 360px; min-height: 0; }
+      .budget-heading { grid-template-columns: 1fr; gap: 18px; }
+      .budget-summary { grid-template-columns: 1fr; }
+      .budget-total + .budget-total { border-top: 1px solid #4b5156; border-left: 0; }
+      #panel-daily .story-layout { grid-template-columns: 1fr; gap: 26px; overflow: visible; }
+      #panel-daily .story-copy { overflow: visible; }
+      #panel-daily .story-visual { position: relative; top: auto; height: 360px; order: -1; }
+      #panel-daily .story-visual.duo { height: 500px; }
+      .panel-heading { grid-template-columns: 1fr; gap: 14px; }
+      .cost-columns, .checklist-layout { grid-template-columns: 1fr; }
+      .culture-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .culture-card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .highlight-extract { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .join-layout { grid-template-columns: 1fr; }
       .notes-grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 620px) {
+      .topbar { height: 104px; }
+      .topbar-inner { height: 52px; }
+      .wordmark { font-size: 13px; }
+      .topnav .icon-button span { display: none; }
+      .topnav .icon-button { width: 36px; padding: 0; justify-content: center; }
+      .workspace-tabs { width: 100%; height: 52px; }
+      .workspace-tab { min-width: 0; padding: 0 2px; font-size: 10px; }
+      .workspace-tab svg { width: 14px; height: 14px; }
+      .tab-workspace { height: calc(100dvh - 104px); margin-top: 104px; }
       .section-inner, .hero-inner { width: min(calc(100% - 24px), var(--max)); }
       .hero-inner { padding-bottom: 48px; }
       h1 { font-size: 48px; }
@@ -436,49 +861,293 @@
       .stats { grid-template-columns: 1fr 1fr; }
       .stat { padding: 17px; min-height: 98px; }
       .stat strong { font-size: 25px; }
+      .budget { padding: 54px 0 60px; }
+      .budget-row { grid-template-columns: 1fr auto; gap: 7px 14px; padding: 12px 0; }
+      .budget-track { grid-column: 1 / -1; grid-row: 2; }
       #routeMap { height: 500px; }
-      .story-layout { width: min(calc(100% - 24px), var(--max)); padding: 48px 0 56px; }
-      .story-visual figure { height: 410px; min-height: 0; }
-      .story-visual.duo { grid-template-columns: 1fr; }
-      .story-visual.duo figure { height: 300px; }
+      #panel-highlights .overview .section-inner { width: min(calc(100% - 24px), var(--max)); }
+      #panel-highlights .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .highlight-extract { grid-template-columns: 1fr; }
+      .highlight-item { min-height: 0; }
+      .highlight-item strong, .highlight-item p { min-height: 0; }
+      .highlight-image { flex-basis: 220px; height: 220px; }
+      .daily-shell { grid-template-columns: 100px minmax(0, 1fr); }
+      .day-rail { padding: 10px 5px; }
+      .day-button { min-height: 62px; padding: 7px 6px 7px 8px; font-size: 10px; }
+      .day-button span { font-size: 8px; }
+      #panel-daily .story-layout { width: 100%; padding: 18px 15px 30px; }
+      #panel-daily .story-visual { height: 250px; }
+      #panel-daily .story-visual.duo { height: 410px; }
+      #panel-daily .story-day { grid-template-columns: 54px minmax(0, 1fr); gap: 11px; }
       .story-day { grid-template-columns: 68px minmax(0, 1fr); gap: 14px; }
       .story-date strong { font-size: 22px; }
+      .panel-inner { width: min(calc(100% - 24px), var(--max)); padding: 30px 0 42px; }
+      .budget-options, .pretty-meals, .culture-grid, .check-groups { grid-template-columns: 1fr; }
+      .culture-card-grid, .culture-card-grid.works { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .podcast-item { grid-template-columns: 74px minmax(0, 1fr); gap: 12px; }
+      .podcast-art { width: 74px; }
+      .meal-note { display: block; }
+      .meal-photo { min-height: 0; aspect-ratio: 4 / 3; }
+      .video-note .meal-photo { height: 260px; aspect-ratio: auto; }
+      .meal-copy { padding: 20px 18px 22px; }
+      .cost-table th { width: 92px; }
+      .cost-table th, .cost-table td { padding: 11px 12px; }
       .join-facts { grid-template-columns: 1fr; }
       .join-facts div:nth-child(odd), .join-facts div:nth-child(even) { padding: 15px 0; border-left: 0; }
     }
 
+    .print-itinerary-header { display: none; }
+
+    @page {
+      size: A4 portrait;
+      margin: 11mm 11mm 13mm;
+    }
+
     @media print {
-      .topbar, .icon-button { display: none !important; }
-      .hero { min-height: 320px; print-color-adjust: exact; }
-      .hero-inner { padding: 80px 0 40px; }
-      .overview, .journey, .notes { padding-top: 28px; padding-bottom: 28px; }
-      #routeMap { height: 520px; }
-      .story-chapter { break-inside: avoid; }
-      .story-layout { grid-template-columns: 56% 44%; padding: 30px 0; gap: 26px; }
-      .story-visual { position: relative; top: auto; }
-      .story-visual figure { height: 420px; min-height: 0; }
-      .story-day { break-inside: avoid; }
-      .credits { color: #333; background: #fff; }
+      html,
+      body {
+        width: auto;
+        height: auto;
+        overflow: visible !important;
+        color: #151719;
+        background: #fff !important;
+        font-size: 9.5pt;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .topbar,
+      .opening-overlay,
+      .contact-dialog,
+      .day-rail,
+      #panel-highlights,
+      #panel-costs,
+      #panel-culture,
+      #panel-checklist,
+      #panel-daily .journey { display: none !important; }
+
+      .tab-workspace {
+        display: block !important;
+        height: auto !important;
+        margin: 0 !important;
+        overflow: visible !important;
+      }
+
+      .tab-panel { display: none !important; }
+      #panel-daily,
+      #panel-daily[hidden] {
+        display: block !important;
+        height: auto !important;
+        overflow: visible !important;
+        background: #fff !important;
+      }
+      #panel-daily .daily-shell,
+      #panel-daily .daily-pages {
+        display: block !important;
+        height: auto !important;
+        overflow: visible !important;
+      }
+
+      .print-itinerary-header {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 5mm 10mm;
+        align-items: end;
+        margin: 0 0 8mm;
+        padding: 0 0 6mm;
+        border-bottom: 1.2mm solid #a92b29;
+      }
+      .print-itinerary-header p { margin: 0; }
+      .print-itinerary-eyebrow {
+        color: #a92b29;
+        font-size: 8pt;
+        font-weight: 900;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+      }
+      .print-itinerary-header h1 {
+        margin: 2mm 0 0;
+        font-family: Georgia, "Songti SC", "STSong", serif;
+        font-size: 25pt;
+        line-height: 1.08;
+        letter-spacing: 0;
+      }
+      .print-itinerary-meta {
+        display: grid;
+        gap: 1.5mm;
+        color: #555d63;
+        font-size: 8.5pt;
+        text-align: right;
+      }
+
+      #panel-daily .story-chapter,
+      #panel-daily .story-chapter.is-active {
+        display: block !important;
+        min-height: 0 !important;
+        height: auto !important;
+        border: 0 !important;
+        background: #fff !important;
+        break-inside: auto;
+      }
+      #panel-daily .story-chapter + .story-chapter {
+        break-before: page;
+        page-break-before: always;
+      }
+      #panel-daily .story-layout {
+        display: flex !important;
+        flex-direction: column;
+        width: 100% !important;
+        min-height: 0 !important;
+        height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        gap: 5mm !important;
+        overflow: visible !important;
+      }
+      #panel-daily .story-copy {
+        min-height: 0 !important;
+        padding: 0 !important;
+        overflow: visible !important;
+      }
+      #panel-daily .story-visual {
+        position: relative !important;
+        top: auto !important;
+        order: -1;
+        display: block;
+        width: 100%;
+        height: auto !important;
+        max-height: none !important;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      #panel-daily .story-visual figure {
+        width: 100%;
+        height: 44mm !important;
+        min-height: 0 !important;
+        margin: 0;
+        background: #e8eaeb;
+      }
+      #panel-daily .story-visual.duo {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: 44mm auto !important;
+        gap: 3mm;
+      }
+      #panel-daily .story-visual.duo figure { height: 44mm !important; }
+      #panel-daily .story-visual.duo .visual-caption { grid-column: 1 / -1; }
+      #panel-daily .story-visual img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      #panel-daily .story-visual figcaption {
+        right: 2mm;
+        bottom: 2mm;
+        padding: 1mm 1.5mm;
+        font-size: 6.5pt;
+      }
+      #panel-daily .visual-caption {
+        margin: 1.5mm 0 0;
+        font-size: 7.5pt;
+        line-height: 1.35;
+      }
+
+      #panel-daily .chapter-number { font-size: 7.5pt; }
+      #panel-daily .story-copy h2 {
+        margin: 1.5mm 0 0;
+        font-size: 23pt;
+        line-height: 1.08;
+        letter-spacing: 0;
+      }
+      #panel-daily .chapter-deck {
+        max-width: none;
+        margin: 2.5mm 0 0;
+        font-size: 9pt;
+        line-height: 1.5;
+      }
+      #panel-daily .chapter-meta { margin-top: 3mm; gap: 1.5mm; }
+      #panel-daily .chapter-meta span {
+        padding: 1mm 1.6mm;
+        font-size: 7pt;
+      }
+      #panel-daily .story-days { margin-top: 4mm; }
+      #panel-daily .story-day {
+        grid-template-columns: 22mm minmax(0, 1fr);
+        gap: 4mm;
+        padding: 4mm 0 0;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      #panel-daily .story-date strong { font-size: 16pt; }
+      #panel-daily .story-date span { margin-top: 1.5mm; font-size: 7pt; }
+      #panel-daily .story-day-body h3 { font-size: 11.5pt; line-height: 1.3; }
+      #panel-daily .story-day-body > p { margin-top: 1.5mm; font-size: 8pt; }
+      #panel-daily .story-day-body .note { font-size: 7.5pt; }
+      #panel-daily .day-list {
+        margin-top: 2mm;
+        gap: 1mm;
+        font-size: 8pt;
+        line-height: 1.4;
+      }
+      #panel-daily .day-list li { padding-left: 3mm; }
+      #panel-daily .day-list li::before {
+        top: .58em;
+        width: 1.2mm;
+        height: 1.2mm;
+      }
+      #panel-daily .stay {
+        margin-top: 2mm !important;
+        padding-top: 2mm;
+        font-size: 7.5pt !important;
+      }
     }
   </style>
 </head>
 <body>
   <header class="topbar">
     <div class="topbar-inner">
-      <a class="wordmark" href="#top">PERÚ / 2026</a>
-      <nav class="topnav" aria-label="页面导航">
-        <a href="#overview">路线总览</a>
-        <a href="#schedule">每日行程</a>
-        <a href="#join">同行招募</a>
-        <a href="#notes">出发提示</a>
-        <button class="icon-button" id="printButton" type="button" title="打印行程" aria-label="打印行程">
+      <span class="wordmark">PERÚ / 2026</span>
+      <nav class="topnav" aria-label="页面工具">
+        <button class="icon-button" id="replayOpening" type="button" title="重播开场" aria-label="重播开场动画">
+          <i data-lucide="film"></i>
+          <span>开场</span>
+        </button>
+        <button class="icon-button" id="contactButton" type="button" title="联系行程发起人" aria-label="联系行程发起人">
+          <i data-lucide="contact"></i>
+          <span>联系</span>
+        </button>
+        <button class="icon-button" id="printButton" type="button" title="打印每日行程" aria-label="打印每日行程">
           <i data-lucide="printer"></i>
           <span>打印</span>
         </button>
       </nav>
     </div>
+    <nav class="workspace-tabs" role="tablist" aria-label="秘鲁行程分页">
+      <button class="workspace-tab" id="tab-highlights" type="button" role="tab" aria-selected="true" aria-controls="panel-highlights" data-tab="highlights"><i data-lucide="map"></i><span>行程亮点</span></button>
+      <button class="workspace-tab" id="tab-daily" type="button" role="tab" aria-selected="false" aria-controls="panel-daily" data-tab="daily" tabindex="-1"><i data-lucide="calendar-days"></i><span>每日行程</span></button>
+      <button class="workspace-tab" id="tab-costs" type="button" role="tab" aria-selected="false" aria-controls="panel-costs" data-tab="costs" tabindex="-1"><i data-lucide="receipt-text"></i><span>费用明细</span></button>
+      <button class="workspace-tab" id="tab-culture" type="button" role="tab" aria-selected="false" aria-controls="panel-culture" data-tab="culture" tabindex="-1"><i data-lucide="library"></i><span>文化预习</span></button>
+      <button class="workspace-tab" id="tab-checklist" type="button" role="tab" aria-selected="false" aria-controls="panel-checklist" data-tab="checklist" tabindex="-1"><i data-lucide="list-checks"></i><span>同行自检</span></button>
+    </nav>
   </header>
 
+  <div class="opening-overlay" id="openingOverlay" aria-label="秘鲁行程开场动画">
+    <iframe class="opening-frame" id="openingFrame" src="previews/peru-opening-animation.html" title="从上海飞往秘鲁的开场动画"></iframe>
+    <button class="opening-enter" id="openingEnter" type="button">进入行程</button>
+  </div>
+
+  <dialog class="contact-dialog" id="contactDialog" aria-labelledby="contactTitle">
+    <div class="contact-dialog-inner">
+      <button class="contact-close" id="contactClose" type="button" aria-label="关闭联系方式"><i data-lucide="x"></i></button>
+      <h2 id="contactTitle">联系雨洁</h2>
+      <p>使用微信扫一扫二维码，添加好友并备注“秘鲁行程”。</p>
+      <img src="assets/peru-itinerary/contact-wechat.jpg" alt="雨洁的微信二维码">
+    </div>
+  </dialog>
+
+  <main class="tab-workspace" id="tabWorkspace">
+  <section class="tab-panel is-active" id="panel-highlights" role="tabpanel" aria-labelledby="tab-highlights" data-panel="highlights">
   <section class="hero" id="top">
     <div class="hero-inner">
       <p class="eyebrow">Tentative itinerary · 暂定行程</p>
@@ -486,14 +1155,13 @@
       <p class="hero-copy">从利马的太平洋海岸进入 Tambopata 雨林，再沿安第斯山脉穿过马丘比丘、圣谷、库斯科与的的喀喀湖，最后抵达白城 Arequipa。</p>
       <div class="hero-meta" aria-label="行程信息">
         <span>2026.09.22 — 10.07</span>
-        <span>16 天</span>
+        <span>16 天 · 12 晚</span>
         <span>上海出发</span>
         <span>利马往返</span>
       </div>
     </div>
   </section>
 
-  <main>
     <section class="overview" id="overview">
       <div class="section-inner overview-grid">
         <div class="map-heading">
@@ -506,20 +1174,46 @@
             <span><i class="legend-line flight"></i>航班</span>
             <span><i class="legend-line rail"></i>火车</span>
             <span><i class="legend-line road"></i>汽车</span>
+            <span><i class="legend-line boat"></i>船</span>
           </div>
         </div>
         <div class="route-map-shell">
-          <div id="routeMap" role="img" aria-label="秘鲁行程地理地图，标有利马、Puerto Maldonado、库斯科、圣谷、马丘比丘、普诺和阿雷基帕"></div>
+          <div id="routeMap" role="img" aria-label="秘鲁行程地理地图，标有利马、Puerto Maldonado、库斯科、圣谷、马丘比丘、普诺、Uros和阿雷基帕"></div>
         </div>
         <p class="map-caption"><i data-lucide="info"></i><span>点位使用城市、车站或遗址的真实经纬度；彩色连线表达本次交通衔接关系，不代表飞机航迹或汽车、铁路的逐弯实际走向。Tambopata 是广大雨林区域，当前以门户城市 Puerto Maldonado 标示，待 lodge 确认后可补充住宿的精确坐标。</span></p>
         <div class="stats" aria-label="行程统计">
-          <div class="stat"><strong>16</strong><span>日历天数</span></div>
-          <div class="stat"><strong>9</strong><span>精确地理点位</span></div>
+          <div class="stat"><strong>16 / 12</strong><span>日历天数 / 住宿晚数</span></div>
+          <div class="stat"><strong>6</strong><span>核心行程亮点</span></div>
           <div class="stat"><strong>3,800m+</strong><span>最高住宿海拔区间</span></div>
-          <div class="stat"><strong>9</strong><span>优先锁定预订</span></div>
+          <div class="stat"><strong>¥2.4–2.9万</strong><span>单人预算 / 不含国际往返机票</span></div>
+        </div>
+        <div class="highlight-extract" aria-label="行程亮点">
+          <article class="highlight-item"><span class="highlight-number">Highlight 01</span><strong>住进“世界之肺”，等待亚马逊在夜里苏醒</strong><p>从Puerto Maldonado继续乘车、乘船，真正进入Tambopata雨林深处，连续住两晚。白天走树冠吊桥、寻找猴群与热带鸟类，夜晚跟着向导寻找凯门鳄、昆虫和夜行动物。</p><a class="highlight-link" href="http://xhslink.com/o/3AWgxO4QOJC" target="_blank" rel="noopener noreferrer">看雨林实拍参考 ↗</a><figure class="highlight-image"><img loading="lazy" src="assets/peru-itinerary/amazon.jpg" alt="Puerto Maldonado附近的亚马逊雨林与河流"></figure></article>
+          <article class="highlight-item"><span class="highlight-number">Highlight 02</span><strong>朝圣“天空之城”，亲眼见证世界新七大奇迹</strong><p>搭乘观景火车穿过乌鲁班巴河谷，再沿盘山公路抵达藏在云雾与群山之间的马丘比丘。完整游览经典Circuit 2，从标志性观景台进入梯田、神庙、石墙与城市遗址。</p><a class="highlight-link" href="http://xhslink.com/o/8CySDw9AKZv" target="_blank" rel="noopener noreferrer">看马丘比丘旅行笔记 ↗</a><figure class="highlight-image"><img loading="lazy" src="previews/peru-flyover-concept/machu-picchu.png" alt="云海群山之间的马丘比丘天空之城"></figure></article>
+          <article class="highlight-item"><span class="highlight-number">Highlight 03</span><strong>一天穿越印加人的“山地实验室”</strong><p>Chinchero、Moray、Maras盐田和Ollantaytambo四大圣谷现场一次串联，看印加人如何修筑梯田、制造微气候、引导盐水，并用巨石建起至今仍在生活的古镇。</p><a class="highlight-link" href="http://xhslink.com/o/eeJF9Uw96U" target="_blank" rel="noopener noreferrer">看印加圣谷实拍参考 ↗</a><figure class="highlight-image"><img loading="lazy" src="assets/peru-itinerary/moray.jpg" alt="圣谷Moray同心圆形印加梯田"></figure></article>
+          <article class="highlight-item"><span class="highlight-number">Highlight 04</span><strong>睡在世界最高可通航湖泊的湖心</strong><p>的的喀喀湖海拔约3,800米。乘私人快船走访Uros芦苇浮岛与Taquile Island，并在湖上Lodge住一晚，看日落沉入湖面，再从湖光与雪山之间醒来。</p><a class="highlight-link" href="http://xhslink.com/o/6sxf4JXlQ4E" target="_blank" rel="noopener noreferrer">看芦苇浮岛真实生活 ↗</a><figure class="highlight-image"><img loading="lazy" src="assets/peru-itinerary/titicaca.jpg" alt="的的喀喀湖Uros芦苇浮岛与高原湖面"></figure></article>
+          <article class="highlight-item"><span class="highlight-number">Highlight 05</span><strong>人生建议：一定要体验一次秘鲁最美高原列车！</strong><p>完全不枯燥的十个小时：从库斯科一路穿越安第斯山脉，雪山、草原、河谷、羊驼和高原村落不断从观景车厢外展开。列车上还有三道式午餐、下午茶、音乐舞蹈与开放式观景车厢。</p><a class="highlight-link" href="http://xhslink.com/o/9Q3zLJNSeQH" target="_blank" rel="noopener noreferrer">看Puno—Cusco火车攻略 ↗</a><figure class="highlight-image"><img loading="lazy" src="assets/peru-itinerary/titicaca-train-la-raya.jpg" alt="蓝黄相间的PeruRail高原列车穿行于La Raya安第斯山间"></figure></article>
+          <article class="highlight-item"><span class="highlight-number">Highlight 06</span><strong>在曾经的“世界第一餐厅”，把整个秘鲁吃一遍</strong><p>Central曾登顶“世界50最佳餐厅”榜首，它把太平洋、安第斯与亚马逊按照海拔搬进一套菜单。再加上Hotel B下午茶与El Tupay，让这趟旅行也用味觉走完一遍。</p><a class="highlight-link" href="http://xhslink.com/o/A2JLhgajUg9" target="_blank" rel="noopener noreferrer">看世界第一餐厅吃什么 ↗</a><figure class="highlight-image"><img loading="lazy" src="assets/peru-itinerary/meal-central.jpg" alt="秘鲁Central餐厅的料理与空间"></figure></article>
         </div>
       </div>
     </section>
+    </section>
+
+    <section class="tab-panel" id="panel-daily" role="tabpanel" aria-labelledby="tab-daily" data-panel="daily" hidden>
+      <div class="daily-shell">
+        <nav class="day-rail" id="dayRail" aria-label="按日期章节查看每日行程"></nav>
+        <div class="daily-pages">
+          <header class="print-itinerary-header" aria-hidden="true">
+            <div>
+              <p class="print-itinerary-eyebrow">Peru · Visa itinerary · 2026</p>
+              <h1>秘鲁旅行每日行程</h1>
+            </div>
+            <div class="print-itinerary-meta">
+              <p>2026.09.22—10.07</p>
+              <p>16天 · 12晚</p>
+              <p>上海出发 · 利马往返</p>
+            </div>
+          </header>
 
     <section class="journey" id="schedule">
       <div class="section-inner journey-intro">
@@ -534,8 +1228,8 @@
         <div class="story-copy">
           <span class="chapter-number">Chapter 01 · 09.22—09.24</span>
           <h2>利马<br>太平洋边的开场</h2>
-          <p class="chapter-deck">先穿过半个地球，再从Barranco的坡地街巷、百年宅邸与海崖日落进入秘鲁。第一章放慢速度，让身体和城市逐渐熟悉彼此。</p>
-          <div class="chapter-meta"><span>上海出发</span><span>建筑与设计</span><span>Barranco / Miraflores</span></div>
+          <p class="chapter-deck">先穿过半个地球，再从Miraflores海岸、利马历史中心与前哥伦布文明进入秘鲁。城市遗产、考古展陈和海崖地形共同构成旅程的第一章。</p>
+          <div class="chapter-meta"><span>上海出发</span><span>历史与考古</span><span>Lima / Miraflores</span></div>
           <div class="story-days">
             <article class="story-day">
               <div class="story-date"><strong>09.22</strong><span>周二 · DAY 01</span></div>
@@ -543,15 +1237,15 @@
             </article>
             <article class="story-day">
               <div class="story-date"><strong>09.23</strong><span>周三 · DAY 02</span></div>
-              <div class="story-day-body"><h3>抵达Lima，入住Miraflores</h3><ul class="day-list"><li><time>15:40</time> 抵达LIM，入境、取行李和整理。</li><li><time>17:15</time> 在公共到达区Left Luggage寄存主箱。</li><li><time>17:35-19:05</time> 前往酒店；晚高峰按90分钟预留。</li><li><time>19:15后</time> 入住、附近晚餐，不排景点。</li></ul><p class="stay"><strong>住宿</strong> Hotel Indigo Lima Miraflores · Calle Alcanfores 1332</p></div>
+              <div class="story-day-body"><h3>抵达Lima，入住Miraflores</h3><ul class="day-list"><li><time>15:40</time> 抵达LIM，完成入境和取行李。</li><li><time>17:15-17:40</time> 在机场公共到达区寄存两件主箱，保存并拍摄寄存凭证。</li><li><time>17:40-19:00</time> 预约车前往Hotel Indigo，晚高峰按45-90分钟预留。</li><li><time>19:30-20:30</time> Larcomar → Malecón海岸步道 → Parque del Amor，之后在Miraflores简单晚餐。</li></ul><p class="note">抵达时已过日落，这段散步只用于透气和适应时差；体力不足可直接取消。</p><p class="stay"><strong>住宿</strong> Hotel Indigo Lima Miraflores · Calle Alcanfores 1332</p></div>
             </article>
             <article class="story-day">
               <div class="story-date"><strong>09.24</strong><span>周四 · DAY 03</span></div>
-              <div class="story-day-body"><h3>Lima建筑与城市空间日</h3><ul class="day-list"><li><time>10:25</time> Puente de los Suspiros + Bajada de Baños。</li><li><time>11:20</time> Museo Pedro de Osma，之后前往LUM。</li><li><time>13:20</time> LUM；<time>15:45</time> Huaca Pucllana预约导览。</li><li><time>17:05</time> Miraflores Malecón海崖日落步行。</li></ul><p class="note">若延误，先缩短午餐和海岸步行，不压缩三个主要建筑点。</p><p class="stay"><strong>住宿</strong> Viajero Lima - Barranco Hostel · Av. Almirante Miguel Grau 426</p></div>
+              <div class="story-day-body"><h3>Lima历史、考古与城市空间日</h3><ul class="day-list"><li><time>10:00-10:55</time> San Francisco修道院与地下墓穴；随后步行看La Soledad、主教座堂、总主教宫和Santo Domingo外立面。</li><li><time>12:00-14:45</time> Larco Café轻午餐，参观Museo Larco的陶器、金属、纺织与展陈空间。</li><li><time>15:20-16:25</time> Huaca Pucllana预约导览，观察土坯金字塔及其与现代城区的尺度关系。</li><li><time>16:45-18:10</time> LUM室内展览与建筑，闭馆后在馆外公共海崖平台等待日落。</li></ul><p class="note">全天使用同一辆包车；LUM室内18:00关闭，日落属于馆外公共空间。</p><p class="stay"><strong>住宿</strong> Viajero Lima - Barranco Hostel · Av. Almirante Miguel Grau 426</p></div>
             </article>
           </div>
         </div>
-        <aside class="story-visual"><figure><img src="assets/peru-itinerary/lima-barranco.jpg" alt="利马Barranco海岸城市景观"><figcaption>Avodrocc · CC BY 2.0</figcaption></figure><p class="visual-caption">Barranco沿海岸台地展开，低层街区与太平洋共同构成旅程的第一重空间。</p></aside>
+        <aside class="story-visual"><figure><img src="assets/peru-itinerary/lima-barranco.jpg" alt="利马海岸城市景观"><figcaption>Avodrocc · CC BY 2.0</figcaption></figure><p class="visual-caption">历史中心、前哥伦布遗址与太平洋海崖，让利马的多重时间在同一天交叠。</p></aside>
       </div>
     </section>
 
@@ -565,11 +1259,11 @@
           <div class="story-days">
             <article class="story-day">
               <div class="story-date"><strong>09.25</strong><span>周五 · DAY 04</span></div>
-              <div class="story-day-body"><h3>Lima → Puerto Maldonado → Tambopata</h3><ul class="day-list"><li>早起退房，前往LIM后先取回寄存主箱。</li><li>搭乘上午直飞PEM的航班，飞行约1小时35-45分钟。</li><li>由lodge接机，在office寄存主箱，再以车 + 船进入雨林。</li><li>傍晚只安排lodge周边短步行、河面观察或夜行。</li></ul><p class="note">先订lodge，再选能接上的航班；书面确认接机、硬箱寄存和9/27送机。</p></div>
+              <div class="story-day-body"><h3>Lima → Puerto Maldonado → Tambopata</h3><ul class="day-list"><li><time>07:10</time> 从Viajero出发，约08:20在LIM取回两件主箱并办理国内航班托运。</li><li>目标航班为<time>10:20-12:05</time> LIM → PEM的LATAM直飞。</li><li>由Inkaterra接机；大箱寄存在Puerto Maldonado办公室，只带每人约10kg过夜包乘车与船进入营地。</li><li>约13:30午餐，下午Trail System雨林步道，晚餐后参加River Night Watch。</li></ul><p class="note">付款前书面确认机场接送、大箱寄存、9月27日取件送机与航班衔接。</p><p class="stay"><strong>住宿</strong> Inkaterra Amazon Field Station · 3天2晚套餐第1晚</p></div>
             </article>
             <article class="story-day">
               <div class="story-date"><strong>09.26</strong><span>周六 · DAY 05</span></div>
-              <div class="story-day-body"><h3>Tambopata雨林全天</h3><ul class="day-list"><li><time>05:00-07:30</time> 清晨动物观察或河道活动。</li><li><time>09:00-12:00</time> 原生林徒步、canopy或植物主题活动。</li><li><time>15:00-18:00</time> Oxbow lake或河上活动。</li><li><time>19:30后</time> 夜行观察。</li></ul><p class="note">由lodge统一安排；只有套餐本身包含时才去Lago Sandoval。</p></div>
+              <div class="story-day-body"><h3>Tambopata雨林全天</h3><ul class="day-list"><li>清晨按lodge安排早餐与观鸟，跟随天气和动物活动调整出发时间。</li><li>上午参加Inkaterra Canopy Walkway，在树冠吊桥和观察平台寻找鸟类与猴群。</li><li>下午优先申请将基础River Island替换为Lake Sandoval，结合雨林步行与湖面观察。</li><li>晚餐后参加Rainforest by Night，关闭闪光灯并完全服从向导。</li></ul><p class="note">Lake Sandoval能否替换、是否加价，以及天气取消后的替代活动均需书面确认。</p><p class="stay"><strong>住宿</strong> Inkaterra Amazon Field Station · 套餐第2晚</p></div>
             </article>
           </div>
         </div>
@@ -581,21 +1275,21 @@
       <div class="story-layout">
         <div class="story-copy">
           <span class="chapter-number">Chapter 03 · 09.27—09.28</span>
-          <h2>马丘比丘<br>在清晨进入遗址</h2>
-          <p class="chapter-deck">从雨林飞抵库斯科，再沿圣谷公路和乌鲁班巴河谷铁路抵达山脚。前一晚住进Machu Picchu Pueblo，换来第二天不必凌晨长途赶路的清晨入场。</p>
-          <div class="chapter-meta"><span>唯一硬衔接</span><span>PeruRail</span><span>Circuit 2优先</span></div>
+          <h2>库斯科与圣谷<br>从雨林进入高原</h2>
+          <p class="chapter-deck">离开低海拔雨林后先在库斯科休息，再以私人车穿过Chinchero、Moray与Maras，逐渐下降到圣谷。把海拔适应和印加农业景观放在前面，为马丘比丘留出完整的一天。</p>
+          <div class="chapter-meta"><span>海拔适应</span><span>圣谷私人车</span><span>Ollantaytambo</span></div>
           <div class="story-days">
             <article class="story-day">
               <div class="story-date"><strong>09.27</strong><span>周日 · DAY 06</span></div>
-              <div class="story-day-body"><h3>Tambopata → CUZ → Ollantaytambo → Machu Picchu Pueblo</h3><ul class="day-list"><li>只买PEM → CUZ直飞，计划抵达CUZ不晚于<time>14:30</time>。</li><li>机场司机举牌接人，预留最长2.5小时前往Ollantaytambo。</li><li><time>18:15前</time> 到站并寄存主箱，只带约8kg过夜包。</li><li><time>19:04-20:45</time> PeruRail前往Machu Picchu Pueblo。</li></ul><p class="note">全程唯一硬衔接日，不把21:00火车当常规备份。</p></div>
+              <div class="story-day-body"><h3>Tambopata → Cusco</h3><ul class="day-list"><li>早餐后退房并参加lodge可安排的最后一段短活动，约10:30结束。</li><li>回到Puerto Maldonado后取回两件大箱；只有Inkaterra书面确认最晚约11:25连人带行李抵达机场，才购买<time>13:25-14:10</time> PEM → CUZ直飞。</li><li>约14:40乘预约车前往鲁米旁库酒店，15:10-15:40入住；同时确认9月28日退房后寄存大箱、9月29日晚再次入住时取回。</li><li>下午在酒店休息并适应海拔，只做附近短距离散步；晚餐改为酒店附近轻松简餐。</li></ul><p class="note">El Tupay周日不营业；刚从雨林进入高原，应少饮酒、早休息，明显不适时取消所有非必要外出。</p><p class="stay"><strong>住宿</strong> 鲁米旁库酒店 Hotel Rumi Punku · Calle Choquechaca 339, Cusco</p></div>
             </article>
             <article class="story-day">
               <div class="story-date"><strong>09.28</strong><span>周一 · DAY 07</span></div>
-              <div class="story-day-body"><h3>Machu Picchu → Ollantaytambo → Urubamba</h3><ul class="day-list"><li><time>07:00-09:30</time> 马丘比丘，优先Circuit 2 / 含经典全景线路。</li><li><time>12:46-14:19</time> 火车回Ollantaytambo，13:37班作次选。</li><li><time>15:00-17:00</time> Ollantaytambo遗址与老城。</li><li><time>18:00后</time> 入住Urubamba西侧 / Maras路口附近酒店。</li></ul><p class="note">当日不再进入Maras盐田或Moray。</p></div>
+              <div class="story-day-body"><h3>Cusco → Chinchero → Moray → Maras → Ollantaytambo</h3><ul class="day-list"><li><time>07:00-07:30</time> 早餐，约07:45从鲁米旁库退房；两件大箱留在酒店，只带小型过夜包，全日使用同一辆预约专车。</li><li><time>08:30-09:30</time> Chinchero的印加梯田、殖民教堂与纺织传统；<time>10:15-11:15</time> Moray同心圆梯田。</li><li><time>11:35-12:35</time> Salineras de Maras盐田，12:45-13:35在附近简餐。</li><li>约<time>14:40</time> 抵达El Albergue放小包，<time>15:00-17:00</time> 参观Ollantaytambo遗址；之后办理入住并整理次日随身物品。</li></ul><p class="note">只带一个小型过夜包进入圣谷；若遗址最终闭园时间更早，相应提前离开Cusco。</p><p class="stay"><strong>住宿</strong> El Albergue · Estación de Tren s/n, Ollantaytambo</p></div>
             </article>
           </div>
         </div>
-        <aside class="story-visual"><figure><img loading="lazy" src="assets/peru-itinerary/machu-picchu.jpg" alt="马丘比丘印加古城与安第斯群山"><figcaption>Diego Delso · CC BY-SA 4.0</figcaption></figure><p class="visual-caption">遗址被山脊、云层与乌鲁班巴河谷包围，建筑秩序必须在真实地形中理解。</p></aside>
+        <aside class="story-visual duo"><figure><img loading="lazy" src="assets/peru-itinerary/cusco.jpg" alt="库斯科主广场与大教堂"><figcaption>Diego Delso · CC BY-SA 4.0</figcaption></figure><figure><img loading="lazy" src="assets/peru-itinerary/moray.jpg" alt="圣谷Moray圆形梯田"><figcaption>McKay Savage · CC BY 2.0</figcaption></figure><p class="visual-caption">从库斯科的殖民城市肌理进入圣谷，石墙、梯田与高原地形逐步展开。</p></aside>
       </div>
     </section>
 
@@ -603,17 +1297,17 @@
       <div class="story-layout">
         <div class="story-copy">
           <span class="chapter-number">Chapter 04 · 09.29</span>
-          <h2>圣谷与库斯科<br>盐田、台地与石墙</h2>
-          <p class="chapter-deck">从Urubamba一路向东，将Maras盐田、Moray圆形梯田、Chinchero与库斯科旧城串成不折返的一日。自然地形、印加工程和殖民城市在同一天彼此叠置。</p>
-          <div class="chapter-meta"><span>私人车环线</span><span>印加工程</span><span>Cusco建筑步行</span></div>
+          <h2>马丘比丘<br>从圣谷往返云端遗址</h2>
+          <p class="chapter-deck">从Ollantaytambo搭乘清晨观景火车进入Machu Picchu Pueblo，再以巴士沿山路上升至遗址。完整走完Circuit 2后返回圣谷，并在夜间回到库斯科。</p>
+          <div class="chapter-meta"><span>观景火车</span><span>Circuit 2</span><span>持证向导</span></div>
           <div class="story-days">
             <article class="story-day">
               <div class="story-date"><strong>09.29</strong><span>周二 · DAY 08</span></div>
-              <div class="story-day-body"><h3>Urubamba → Maras → Moray → Chinchero → Cusco</h3><ul class="day-list"><li><time>09:30</time> Salineras de Maras；<time>10:50</time> Moray。</li><li><time>13:30-14:40</time> Chinchero的印加梯田、殖民教堂与纺织空间。</li><li><time>15:40</time> 入住Cusco历史中心酒店。</li><li><time>17:00-19:00</time> Plaza de Armas、Calle Loreto、Qorikancha与Hatun Rumiyoc。</li></ul><p class="stay"><strong>选址</strong> Plaza de Armas步行5-10分钟、车程约10分钟可到Wanchaq。</p></div>
+              <div class="story-day-body"><h3>Ollantaytambo ↔ Machu Picchu → Cusco</h3><ul class="day-list"><li>约05:20起床；退房后把小型过夜包寄存在El Albergue，只带马丘比丘当日随身包。</li><li>约<time>06:10</time> 搭普通观景火车前往Machu Picchu Pueblo，随后乘Consettur巴士上山。</li><li><time>09:00-12:00</time> 游览Circuit 2；下山后快速午餐，返程火车优先选择最晚约14:30-14:55从热水镇出发的班次。</li><li>预计16:00-16:30抵达Ollantaytambo，取包后由司机接站，约18:30-19:00回到鲁米旁库并取回大箱；<time>20:00</time> 前往El Tupay晚餐。</li></ul><p class="note">El Tupay周二营业；若买不到合适的早班返程火车，不应锁定不可取消的晚餐。</p><p class="stay"><strong>住宿</strong> 鲁米旁库酒店 Hotel Rumi Punku · Calle Choquechaca 339, Cusco</p></div>
             </article>
           </div>
         </div>
-        <aside class="story-visual duo"><figure><img loading="lazy" src="assets/peru-itinerary/moray.jpg" alt="圣谷Moray圆形梯田"><figcaption>McKay Savage · CC BY 2.0</figcaption></figure><figure><img loading="lazy" src="assets/peru-itinerary/cusco.jpg" alt="库斯科主广场与大教堂"><figcaption>Diego Delso · CC BY-SA 4.0</figcaption></figure><p class="visual-caption">从农业梯田到殖民广场，圣谷与库斯科展示两种城市和土地秩序。</p></aside>
+        <aside class="story-visual"><figure><img loading="lazy" src="assets/peru-itinerary/machu-picchu.jpg" alt="马丘比丘印加古城与安第斯群山"><figcaption>Diego Delso · CC BY-SA 4.0</figcaption></figure><p class="visual-caption">遗址被山脊、云层与乌鲁班巴河谷包围，建筑秩序必须在真实地形中理解。</p></aside>
       </div>
     </section>
 
@@ -622,16 +1316,16 @@
         <div class="story-copy">
           <span class="chapter-number">Chapter 05 · 09.30—10.01</span>
           <h2>的的喀喀湖<br>穿过高原去往天空之湖</h2>
-          <p class="chapter-deck">白天列车跨越La Raya与安第斯高原，终点是海拔约3,800米的Puno。第二天晚一点出发，以私人快艇连接Uros浮岛与Taquile的纺织传统。</p>
-          <div class="chapter-meta"><span>Titicaca Train</span><span>私人快艇</span><span>海拔约3,800米</span></div>
+          <p class="chapter-deck">白天列车跨越La Raya与安第斯高原，终点是海拔约3,800米的Puno。第二天以私人快艇连接Uros与Taquile，并在芦苇浮岛住进湖面日落。</p>
+          <div class="chapter-meta"><span>Titicaca Train</span><span>私人快艇</span><span>Uros浮岛住宿</span></div>
           <div class="story-days">
             <article class="story-day">
               <div class="story-date"><strong>09.30</strong><span>周三 · DAY 09</span></div>
-              <div class="story-day-body"><h3>Cusco Wanchaq → Puno</h3><ul class="day-list"><li><time>07:10</time> 抵达Wanchaq Station，预留约40分钟。</li><li><time>07:50</time> PeruRail Titicaca Train发车。</li><li>白天穿越安第斯高原，La Raya停留与餐饮以车票内容为准。</li><li><time>18:20</time> 抵达Lago Titicaca Station, Puno。</li></ul><p class="note">Cusco乘车点是Wanchaq，不是Ollantaytambo、Urubamba或Poroy。</p></div>
+              <div class="story-day-body"><h3>Cusco Wanchaq → Puno</h3><ul class="day-list"><li><time>06:50</time> 从鲁米旁库退房，前往Wanchaq Station并最迟提前30-40分钟到站。</li><li>搭乘PeruRail Titicaca Train，白天穿越安第斯高原与La Raya。</li><li>车上包含三道式午餐、下午茶、现场音乐舞蹈和观景车厢，具体以车票权益为准。</li><li>傍晚抵达Lago Titicaca Station，短途车前往酒店；高海拔首晚不再安排活动。</li></ul><p class="note">目标日期的准确发车、抵达时间及大件行李额度必须以最终车票为准。</p><p class="stay"><strong>住宿</strong> Conde de Lemos · Jr. Puno 681</p></div>
             </article>
             <article class="story-day">
               <div class="story-date"><strong>10.01</strong><span>周四 · DAY 10</span></div>
-              <div class="story-day-body"><h3>Lake Titicaca：Uros + Taquile</h3><ul class="day-list"><li><time>09:30</time> 从酒店出发，预订约10:00出港的私人快艇。</li><li><time>11:00-12:00</time> Uros Floating Islands。</li><li><time>13:15-15:15</time> Taquile Island村落、纺织传统与湖景午餐。</li><li><time>16:30-17:00</time> 返回Puno。</li></ul><p class="note">风浪大或私船无法确认时，只做Uros。</p></div>
+              <div class="story-day-body"><h3>Lake Titicaca：Uros + Taquile</h3><ul class="day-list"><li><time>09:30</time> 退房并前往Puerto de Puno，全部大小行李随私人快船出发。</li><li>先到Uros与lodge对接行李，参观芦苇岛的结构与维护方式。</li><li>约11:15继续前往Taquile，岛上步行、了解纺织传统并享用湖景午餐。</li><li>约15:30离开Taquile，17:00-17:30返回Uros Kurmi办理入住并看湖上日落。</li></ul><p class="note">若风浪过大则取消Taquile；私人船报价需包含两人、全部行李、防水与最终送到lodge。</p><p class="stay"><strong>住宿</strong> Uros Titicaca Kurmi Lodge · Uros Floating Islands</p></div>
             </article>
           </div>
         </div>
@@ -644,20 +1338,20 @@
         <div class="story-copy">
           <span class="chapter-number">Chapter 06 · 10.02—10.03</span>
           <h2>Arequipa<br>火山石筑成的白城</h2>
-          <p class="chapter-deck">从高原湖一路下降到火山之间的城市。Santa Catalina的彩色院落、殖民宅邸与sillar火山石拱廊，为自然段落之后补上一章完整的建筑观察。</p>
-          <div class="chapter-meta"><span>Sillar火山石</span><span>殖民建筑</span><span>Misti日落</span></div>
+          <p class="chapter-deck">从浮岛乘船返回Puno，再沿公路下降到火山之间的城市。采石场、Santa Catalina的彩色院落与sillar火山石拱廊，构成一章从材料到城市的完整建筑观察。</p>
+          <div class="chapter-meta"><span>长途巴士</span><span>Ruta del Sillar</span><span>Misti日落</span></div>
           <div class="story-days">
             <article class="story-day">
               <div class="story-date"><strong>10.02</strong><span>周五 · DAY 11</span></div>
-              <div class="story-day-body"><h3>Puno → Arequipa</h3><ul class="day-list"><li><time>07:00</time> 私人车从酒店出发。</li><li>车程约5.5-6.5小时；Lagunillas短停控制在15-20分钟。</li><li><time>13:00-14:00</time> 抵达Arequipa历史中心酒店。</li><li><time>16:30-18:30</time> Plaza de Armas、Cathedral外部与火山石拱廊轻量步行。</li></ul></div>
+              <div class="story-day-body"><h3>Uros → Puno → Arequipa</h3><ul class="day-list"><li><time>06:45-07:25</time> 预订专船从Uros Kurmi返回Puerto de Puno，全部行李随船。</li><li><time>08:30-14:30</time> 搭乘Flores Hnos AC Semi Sleeper前往Arequipa，班次和行李权益以出票页为准。</li><li><time>14:30-15:00</time> 从客运站前往Palacio Guaqui，入住后吃简餐。</li><li><time>16:30-19:00</time> Plaza de Armas、Portal de Flores、Iglesia de la Compañía外立面、Claustros与Calle Mercaderes。</li></ul><p class="note">若船班或巴士晚点，取消下午散步，不影响次日核心行程。</p><p class="stay"><strong>住宿</strong> Palacio Guaqui · Arequipa历史中心</p></div>
             </article>
             <article class="story-day">
               <div class="story-date"><strong>10.03</strong><span>周六 · DAY 12</span></div>
-              <div class="story-day-body"><h3>Arequipa建筑日</h3><ul class="day-list"><li><time>08:00-10:15</time> Monasterio de Santa Catalina。</li><li><time>10:20-12:15</time> Casa del Moral、Plaza de Armas与Iglesia de la Compañía。</li><li><time>14:00-16:00</time> 休息或中心区材料摄影。</li><li><time>16:35-18:15</time> Mirador de Yanahuara与Misti火山日落。</li></ul></div>
+              <div class="story-day-body"><h3>Arequipa火山石建筑日</h3><ul class="day-list"><li><time>08:00-13:00</time> Ruta del Sillar半日：Añashuayco采石场及当日开放的切石点。</li><li><time>13:15-14:10</time> 返回老城午餐。</li><li><time>14:30-17:00</time> Monasterio de Santa Catalina，观察街巷式修道院、院落、厚墙和色彩分区。</li><li><time>17:30-18:30</time> Mirador de Yanahuara等待Misti火山方向日落。</li></ul><p class="note">不再加塞Casa del Moral，为采石场和修道院保留完整时间。</p><p class="stay"><strong>住宿</strong> Palacio Guaqui · 第2晚</p></div>
             </article>
           </div>
         </div>
-        <aside class="story-visual"><figure><img loading="lazy" src="assets/peru-itinerary/arequipa.jpg" alt="Arequipa Santa Catalina修道院的火山石拱廊"><figcaption>Jimmy Harris · CC BY 2.0</figcaption></figure><p class="visual-caption">厚重墙体、拱券与强烈色面，让Santa Catalina像一座藏在城市中的城。</p></aside>
+        <aside class="story-visual"><figure><img loading="lazy" src="assets/peru-itinerary/arequipa-misti.jpg" alt="El Misti火山下的Arequipa白色殖民城区"><figcaption>写实氛围图 · El Misti与白城</figcaption></figure><p class="visual-caption">白色火山岩屋顶与教堂塔楼铺在山脚，El Misti从城市背后升起，也解释了“白城”与火山地貌的直接关系。</p></aside>
       </div>
     </section>
 
@@ -666,24 +1360,24 @@
         <div class="story-copy">
           <span class="chapter-number">Chapter 07 · 10.04—10.07</span>
           <h2>回到利马<br>以一顿午餐收束旅程</h2>
-          <p class="chapter-deck">从白城飞回太平洋岸，在修复后的1920年代宅邸住最后一晚。Central把秘鲁不同海拔和生态重新放回餐桌，之后经巴黎返回上海。</p>
-          <div class="chapter-meta"><span>Barranco宅邸</span><span>Central</span><span>巴黎联程返航</span></div>
+          <p class="chapter-deck">从白城飞回太平洋岸，在Barranco完成宅邸、艺术与城市街巷的最后一章。Central把旅途中不同海拔和生态重新放回餐桌，之后经巴黎返回上海。</p>
+          <div class="chapter-meta"><span>Barranco艺术</span><span>Central</span><span>巴黎联程返航</span></div>
           <div class="story-days">
             <article class="story-day">
               <div class="story-date"><strong>10.04</strong><span>周日 · DAY 13</span></div>
-              <div class="story-day-body"><h3>Arequipa → Lima</h3><ul class="day-list"><li>选择AQP → LIM上午直飞，国内航班前2小时到机场。</li><li>抵达后入住并体验修复后的1920年代宅邸。</li><li>若航班早到且实时交通可接受，可去Monterrico的PES教堂。</li><li>请前台确认次日退房后的行李寄存。</li></ul><p class="stay"><strong>住宿</strong> Casa Republica Barranco Boutique Hotel · Jirón Sáenz Peña 208</p></div>
+              <div class="story-day-body"><h3>Arequipa → Lima</h3><ul class="day-list"><li>搭乘AQP → LIM上午直飞，航班必须最晚约11:30落地。</li><li>取行李后直接前往Casa Republica Barranco，先放行李或办理入住。</li><li><time>14:15-15:45</time> Museo Pedro de Osma：1906年宅邸、花园轴线、彩色玻璃与殖民艺术。</li><li><time>16:30-18:15</time> Hotel B Art Tour + Tea Time，之后步行返回酒店。</li></ul><p class="note">若航班延误，优先保留Pedro de Osma；Hotel B活动以邮件确认的预约为准。</p><p class="stay"><strong>住宿</strong> Casa Republica Barranco Boutique Hotel · Jirón Sáenz Peña 208</p></div>
             </article>
             <article class="story-day">
               <div class="story-date"><strong>10.05</strong><span>周一 · DAY 14</span></div>
-              <div class="story-day-body"><h3>Central午餐 → LIM机场</h3><ul class="day-list"><li><time>11:00</time> 退房并寄存行李。</li><li><time>12:00-12:30</time> 争取Central最早午餐位，12:45是最晚上限。</li><li><time>15:45</time> 结束午餐，返回酒店取行李。</li><li><time>17:20前</time> 抵达LIM，搭乘20:20国际航班。</li></ul><p class="note">Central：Av. Pedro de Osma 301, Barranco；订位时注明当晚航班。</p></div>
+              <div class="story-day-body"><h3>Barranco步行 + Central午餐 → LIM机场</h3><ul class="day-list"><li><time>09:30-11:20</time> Casa Republica → Plaza de Barranco → Biblioteca Municipal与教堂外立面 → Puente de los Suspiros → Bajada de Baños。</li><li><time>11:20-12:10</time> 返回酒店附近休息，随后前往Central。</li><li><time>12:45-15:45</time> Central标准tasting menu，不安排其他午餐。</li><li><time>16:10</time> 取行李并出发前往LIM，目标17:40前抵达，搭乘20:20国际航班。</li></ul><p class="note">Central：Av. Pedro de Osma 301, Barranco；订位时注明当晚航班。</p></div>
             </article>
             <article class="story-day">
               <div class="story-date"><strong>10.06</strong><span>周二 · DAY 15</span></div>
-              <div class="story-day-body"><h3>巴黎国际中转</h3><p>在巴黎戴高乐机场转机，保持全程联程、行李直挂并留在国际中转区。</p><p class="note">出票后再次由承运航司确认行李直挂和过境要求。</p></div>
+              <div class="story-day-body"><h3>巴黎国际中转</h3><p>按法航联程抵达Paris CDG，依登机牌和机场屏幕前往下一程登机口，不安排巴黎入境活动；预计约23:30继续飞往上海。</p><p class="note">出票后再次由承运航司确认行李直挂和过境要求。</p></div>
             </article>
             <article class="story-day">
               <div class="story-date"><strong>10.07</strong><span>周三 · DAY 16</span></div>
-              <div class="story-day-body"><h3>抵达上海</h3><p>预计18:00抵达上海，结束秘鲁旅行。</p><p class="note">最终抵达时间以出票航班为准。</p></div>
+              <div class="story-day-body"><h3>抵达上海</h3><p>预计18:00抵达上海浦东国际机场，完成入境并领取托运行李，结束秘鲁旅行。</p><p class="note">最终抵达时间以出票航班为准。</p></div>
             </article>
           </div>
         </div>
@@ -691,21 +1385,116 @@
       </div>
     </section>
 
-    <section class="join-strip" id="join">
-      <div class="section-inner join-layout">
-        <div><p class="section-kicker">Travel with us · 同行招募</p><h2>一起走进雨林、印加古城与安第斯高原</h2><p class="join-copy">这不是赶点式打卡，而是一段把建筑、自然与在地生活放在同一条路线里的深度旅行。费用、人数上限与正式报名方式会在核心机酒和门票锁定后发布。</p></div>
-        <div class="join-facts"><div><strong>2026.09.22—10.07</strong><span>16天完整行程</span></div><div><strong>上海出发</strong><span>利马往返</span></div><div><strong>组队中</strong><span>同行人数待确认</span></div><div><strong>建筑 + 自然</strong><span>雨林、遗址与高原</span></div></div>
+        </div>
       </div>
     </section>
 
-    <section class="notes" id="notes">
-      <div class="section-inner">
-        <p class="section-kicker">Before departure</p>
-        <h2>现在最需要锁定的三组预订</h2>
-        <div class="notes-grid">
-          <div class="note-block"><i data-lucide="ticket-check"></i><h3>火车与马丘比丘</h3><p>优先锁定 9/30 Titicaca Train、9/28 马丘比丘早场、9/27 去程火车与 9/28 返程火车。</p></div>
-          <div class="note-block"><i data-lucide="plane"></i><h3>雨林硬衔接</h3><p>Tambopata lodge、9/25 LIM → PEM 与 9/27 PEM → CUZ 联动确认；后者必须在 14:30 前计划落地。</p></div>
-          <div class="note-block"><i data-lucide="calendar-check"></i><h3>后半程预约</h3><p>确认 10/1 私人快艇、10/4 AQP → LIM 上午直飞，以及 10/5 Central 最早午餐位。</p></div>
+    <section class="tab-panel" id="panel-costs" role="tabpanel" aria-labelledby="tab-costs" data-panel="costs" hidden>
+      <section class="budget" id="budget">
+        <div class="panel-inner">
+          <div class="panel-heading">
+            <div><p class="section-kicker">Travel budget · 同行预算</p><h2>两种同行节奏，<br>同一条完整路线</h2></div>
+            <p class="lead">这次不是纯 AA 式临时组队，而是我们会负责前期方案、资源对接、预订协调以及行程中的组织和导游工作，所以整体费用中包含一定的组织服务成本。三段秘鲁境内航班已纳入当地交通预算；上海往返利马的国际机票不放进预算，由每个人根据自己的时间和退改需求购买。</p>
+          </div>
+          <div class="budget-options" aria-label="同行预算范围">
+            <article class="budget-option"><small>基础同行预算</small><strong>约 ¥24,000 / 人</strong><p>住宿、三段秘鲁境内航班及其他规定交通、观景火车、门票与向导、亚马逊3天2晚，以及酒店早餐。</p></article>
+            <article class="budget-option pretty"><small>漂亮饭体验预算</small><strong>约 ¥29,000 / 人</strong><p>在完整基础行程上，加上Central、Hotel B下午茶和El Tupay晚餐三段餐桌体验。</p></article>
+          </div>
+          <div class="cost-columns">
+            <article class="cost-card">
+              <h3>同行预算包含</h3>
+              <table class="cost-table">
+                <tbody>
+                  <tr><th>住宿</th><td>12晚：Hotel Indigo 1晚（4–5星设计型国际酒店）、Viajero Barranco 1晚（历史建筑精品旅舍）、Inkaterra Amazon Field Station 2晚（生态lodge）、Hotel Rumi Punku 2晚（库斯科历史中心精品酒店）、El Albergue 1晚（历史型精品酒店）、Conde de Lemos 1晚（约3星城市酒店）、Uros Kurmi 1晚（湖上lodge）、Palacio Guaqui 2晚（4星精品酒店）、Casa Republica 1晚（高端精品酒店）。</td></tr>
+                  <tr><th>餐食</th><td>所有住宿提供的早餐；亚马逊套餐内2顿午餐及其他套餐餐食；Titicaca Train车上1顿三道式午餐。漂亮饭体验预算另含下方3顿。</td></tr>
+                  <tr><th>门票与向导</th><td>行程里明确安排、正常参观需要购买的门票、预约费用和当地讲解都放进预算，不用到现场再逐项重复购买。包含San Francisco、Museo Larco、Huaca Pucllana、圣谷Chinchero/Moray/Maras/Ollantaytambo、马丘比丘Circuit 2及向导、Uros与Taquile参访、Ruta del Sillar、Santa Catalina、Pedro de Osma等。</td></tr>
+                  <tr><th>当地交通</th><td>包含Lima—Puerto Maldonado、Puerto Maldonado—Cusco、Arequipa—Lima三段秘鲁境内航班；行程规定的机场往返酒店接送；Lima 9/24全天用车；9/28 Cusco—Chinchero—Moray—Maras—Ollantaytambo包车；Ollantaytambo往返马丘比丘观景火车及Consettur巴士；Titicaca Train；Puno/Uros/Taquile船只；Puno—Arequipa长途车；Arequipa按行程用车，以及酒店与车站、码头之间的规定接送。</td></tr>
+                  <tr><th>雨林体验</th><td>Inkaterra Amazon Field Station 3天2晚，含lodge、规定接送、船行、雨林徒步、树冠步道、夜间观察及套餐内活动；具体项目按天气和lodge最终排期执行。</td></tr>
+                </tbody>
+              </table>
+            </article>
+            <article class="cost-card">
+              <h3>个人另外准备</h3>
+              <table class="cost-table">
+                <tbody>
+                  <tr><th>国际往返机票</th><td>上海往返利马的国际机票需自行购买，可根据个人时间选择航班、托运行李额度及退改条件；三段秘鲁境内航班已包含在当地交通预算内。</td></tr>
+                  <tr><th>保险</th><td>建议覆盖高海拔、雨林活动、航班延误、行李和医疗转运的旅行保险。</td></tr>
+                  <tr><th>签证</th><td>持有符合秘鲁入境规定的有效美签等证件，可按届时政策确认是否免办秘鲁签证；没有美签的宝子也不用卡住，可以直接申请秘鲁旅游签证。已有约1周顺利出签的实际案例，可查看这篇<a href="https://www.xiaohongshu.com/explore/68cdf9a800000000130369f0?app_platform=ios&amp;app_version=9.38&amp;share_from_user_hidden=true&amp;xsec_source=app_share&amp;type=normal&amp;xsec_token=CBmNTHiS3EaER-hOgCWlreCbujEH3l9nMk1vrfLZdqHqc%3D&amp;author_share=1&amp;xhsshare=WeixinSession&amp;shareRedId=N0syQTRKRz02NzUyOTgwNjY0OTdGSjZK&amp;apptime=1784127924&amp;share_id=aac728c75cea432c8d45879bd37701c6&amp;wechatWid=c848811d710192f846152fa6a53ea8fd&amp;wechatOrigin=menu" target="_blank" rel="noopener noreferrer">秘鲁旅游签下签攻略</a>。实际材料要求和审理时间仍以秘鲁驻华使领馆最新通知为准。</td></tr>
+                  <tr><th>未注明餐食</th><td>行程中没有明确写入的午餐、晚餐和途中简餐。Larco Café轻午餐为推荐，不强制；基础同行预算不含三顿漂亮饭。</td></tr>
+                </tbody>
+              </table>
+            </article>
+          </div>
+          <div class="pretty-meals" aria-label="漂亮饭体验">
+            <article class="meal-note video-note">
+              <div class="meal-photo"><video autoplay muted loop playsinline controls preload="metadata" poster="assets/peru-itinerary/meal-central.jpg" aria-label="Central餐厅小红书探店视频"><source src="assets/peru-itinerary/meal-central-xhs.mp4" type="video/mp4"></video><a class="video-source" href="https://www.xiaohongshu.com/explore/6a2c3b8b000000001c024a8c?note_flow_source=wechat&amp;xsec_token=CBnNA5Y2UWKywlx2IZ19hMvtLZPnHFkshzM5RXBHJT7Bc=" target="_blank" rel="noreferrer">小红书原笔记 ↗</a></div>
+              <div class="meal-copy"><span>漂亮饭 01</span><strong>Central｜把整个秘鲁吃一遍</strong><p>这不是普通的精致午餐，更像一场关于秘鲁地理与物种的展览。Central的“世界高低差”菜单由12个篇章、32道呈现组成，从太平洋海岸、安第斯高原一路走进亚马逊雨林，每一道都对应不同海拔、生态与季节。石材、原木、玻璃和植物构成安静的现代空间，适合作为旅程最后一顿正式午餐，把前面走过的雨林、高原与海岸重新串起来。</p><a class="meal-link" href="https://centralrestaurante.com.pe/menu" target="_blank" rel="noreferrer">查看Central官方菜单 ↗</a></div>
+            </article>
+            <article class="meal-note video-note">
+              <div class="meal-photo"><video autoplay muted loop playsinline controls preload="metadata" poster="assets/peru-itinerary/meal-hotel-b.jpg" aria-label="Hotel B宅邸与艺术空间小红书视频"><source src="assets/peru-itinerary/meal-hotel-b-xhs.mp4" type="video/mp4"></video><a class="video-source" href="http://xhslink.com/o/9YYXtmQHbyb" target="_blank" rel="noreferrer">小红书原笔记 ↗</a></div>
+              <div class="meal-copy"><span>漂亮饭 02</span><strong>Hotel B｜在百年宅邸里看艺术、喝下午茶</strong><p>Hotel B是一栋建于1914年的Belle Époque风格宅邸，内部收藏了大量秘鲁及拉丁美洲当代艺术。约1小时45分钟的体验会先带我们看宅邸空间与艺术收藏，再到图书馆或庭院享用迷你咸点、三明治、法式小甜点、蛋糕和茶饮。重点是空间和氛围，也很适合稍微穿漂亮一点，在Barranco留下一组有质感的旅行照片。</p><a class="meal-link" href="https://hotelb.pe/en/offers/tea-time/" target="_blank" rel="noreferrer">Hotel B下午茶 ↗</a><a class="meal-link" href="https://hotelb.pe/experiences/" target="_blank" rel="noreferrer">艺术与下午茶体验 ↗</a></div>
+            </article>
+            <article class="meal-note video-note">
+              <div class="meal-photo"><video autoplay muted loop playsinline controls preload="metadata" poster="assets/peru-itinerary/meal-el-tupay.jpg" aria-label="Belmond Hotel Monasterio修道院庭院小红书视频"><source src="assets/peru-itinerary/meal-el-tupay-xhs.mp4" type="video/mp4"></video><a class="video-source" href="http://xhslink.com/o/506HOOFQjko" target="_blank" rel="noreferrer">小红书原笔记 ↗</a></div>
+              <div class="meal-copy"><span>漂亮饭 03</span><strong>El Tupay｜在修道院拱顶下吃一顿库斯科晚餐</strong><p>El Tupay位于Belmond Hotel Monasterio内，建筑前身是建于印加地基之上的十七世纪神学院。石拱、烛光、白色桌布和古典庭院很有库斯科的庄重感；菜品以现代方式重新表达圣谷菌菇、藜麦、鳟鱼、羊膝、羊驼肉和秘鲁本地香草。在古老修道院空间里，完成一顿有仪式感的高原晚餐。</p><a class="meal-link" href="https://pdfs.belmond.com/ocus_dining_el_tupay_menu.pdf" target="_blank" rel="noreferrer">查看El Tupay官方菜单 ↗</a></div>
+            </article>
+          </div>
+          <p class="budget-note">预算会随汇率、人数、房型和出票时间调整。基础同行预算与漂亮饭体验预算共享同一条路线，差别只在是否一起安排三段餐桌体验。</p>
+        </div>
+      </section>
+    </section>
+
+    <section class="tab-panel" id="panel-culture" role="tabpanel" aria-labelledby="tab-culture" data-panel="culture" hidden>
+      <div class="panel-inner">
+        <div class="panel-heading">
+          <div><p class="section-kicker">Before Peru · 出发前书影音</p><h2>先认识一点秘鲁，<br>再去看真实现场</h2></div>
+          <p class="lead">出发前任选一本书、一部作品、一段音乐或一期播客，就足够让印加遗址、Lima街区和雨林多一层背景。</p>
+        </div>
+        <div class="culture-grid">
+          <article class="culture-column"><i data-lucide="book-open"></i><h3>读三本</h3>
+            <div class="culture-card-grid">
+              <div class="culture-item"><a class="culture-cover book-cover" href="https://book.douban.com/subject/35388636/" target="_blank" rel="noreferrer"><img src="assets/peru-itinerary/culture/book-silver-sword-stone.png" alt="《银、剑、石：拉丁美洲的三重烙印》书封"></a><div class="culture-copy"><a href="https://book.douban.com/subject/35388636/" target="_blank" rel="noreferrer">《银、剑、石》</a><span class="culture-rating"><b>9.1</b> · 2345人评价</span><span>用银矿、征服与现代政治三条线，建立进入拉丁美洲的宏观坐标。</span><a class="culture-action" href="https://book.douban.com/subject/35388636/" target="_blank" rel="noreferrer">豆瓣详情 ↗</a></div></div>
+              <div class="culture-item"><a class="culture-cover book-cover" href="https://search.douban.com/book/subject_search?search_text=%E6%8B%89%E4%B8%81%E7%BE%8E%E6%B4%B2%E8%A2%AB%E5%88%87%E5%BC%80%E7%9A%84%E8%A1%80%E7%AE%A1&amp;cat=1001" target="_blank" rel="noreferrer"><img src="assets/peru-itinerary/culture/book-open-veins.png" alt="《拉丁美洲被切开的血管》书封"></a><div class="culture-copy"><a href="https://search.douban.com/book/subject_search?search_text=%E6%8B%89%E4%B8%81%E7%BE%8E%E6%B4%B2%E8%A2%AB%E5%88%87%E5%BC%80%E7%9A%84%E8%A1%80%E7%AE%A1&amp;cat=1001" target="_blank" rel="noreferrer">《被切开的血管》</a><span class="culture-rating"><b>8.3</b> · 7346人评价</span><span>从殖民掠夺与资源经济理解大陆历史，适合出发前搭一副历史骨架。</span><a class="culture-action" href="https://search.douban.com/book/subject_search?search_text=%E6%8B%89%E4%B8%81%E7%BE%8E%E6%B4%B2%E8%A2%AB%E5%88%87%E5%BC%80%E7%9A%84%E8%A1%80%E7%AE%A1&amp;cat=1001" target="_blank" rel="noreferrer">豆瓣详情 ↗</a></div></div>
+              <div class="culture-item"><a class="culture-cover book-cover" href="https://book.douban.com/works/1020144?order=time" target="_blank" rel="noreferrer"><img src="assets/peru-itinerary/culture/book-conversation-cathedral.png" alt="《酒吧长谈》书封"></a><div class="culture-copy"><a href="https://book.douban.com/works/1020144?order=time" target="_blank" rel="noreferrer">《酒吧长谈》</a><span class="culture-rating"><b>9.4</b> · 10984人评价</span><span>从Lima的政治、阶层与私人生活，读懂一座远比海岸度假地复杂的首都。</span><a class="culture-action" href="https://book.douban.com/works/1020144?order=time" target="_blank" rel="noreferrer">豆瓣详情 ↗</a></div></div>
+            </div>
+          </article>
+          <article class="culture-column"><i data-lucide="clapperboard"></i><h3>看两部</h3>
+            <div class="culture-card-grid works">
+              <div class="culture-item"><a class="culture-cover poster-cover" href="https://search.bilibili.com/all?keyword=Virgilio%20Central%20%E7%A7%98%E9%B2%81%20%E7%BA%AA%E5%BD%95%E7%89%87" target="_blank" rel="noreferrer"><img src="assets/peru-itinerary/culture/work-virgilio-netflix.jpg" alt="纪录片《Virgilio》画面"></a><div class="culture-copy"><a href="https://search.bilibili.com/all?keyword=Virgilio%20Central%20%E7%A7%98%E9%B2%81%20%E7%BA%AA%E5%BD%95%E7%89%87" target="_blank" rel="noreferrer">Virgilio｜Central主厨纪录片</a><span>跟着Central主厨跨越秘鲁海拔寻找食材，提前看懂餐桌背后的地理。</span><a class="culture-action" href="https://search.bilibili.com/all?keyword=Virgilio%20Central%20%E7%A7%98%E9%B2%81%20%E7%BA%AA%E5%BD%95%E7%89%87" target="_blank" rel="noreferrer">去B站查找 ↗</a></div></div>
+              <div class="culture-item"><a class="culture-cover poster-cover" href="https://search.bilibili.com/all?keyword=%E6%91%A9%E6%89%98%E6%97%A5%E8%AE%B0%20The%20Motorcycle%20Diaries" target="_blank" rel="noreferrer"><img src="assets/peru-itinerary/culture/work-motorcycle-diaries.jpg" alt="电影《摩托日记》官方海报"></a><div class="culture-copy"><a href="https://search.bilibili.com/all?keyword=%E6%91%A9%E6%89%98%E6%97%A5%E8%AE%B0%20The%20Motorcycle%20Diaries" target="_blank" rel="noreferrer">《摩托日记》</a><span>Andes、公路和大陆尺度，为这趟跨地貌移动建立一段很好的视觉前奏。</span><a class="culture-action" href="https://search.bilibili.com/all?keyword=%E6%91%A9%E6%89%98%E6%97%A5%E8%AE%B0%20The%20Motorcycle%20Diaries" target="_blank" rel="noreferrer">去B站查找 ↗</a></div></div>
+            </div>
+          </article>
+          <article class="culture-column"><i data-lucide="headphones"></i><h3>听两首</h3>
+            <div class="culture-stack">
+              <div class="spotify-player"><iframe title="Spotify播放：Chabuca Granda - La Flor de Canela" src="https://open.spotify.com/embed/track/3WhQJVHA1ilGCE6x2HYdS4?utm_source=generator" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe></div>
+              <div class="spotify-player"><iframe title="Spotify播放：Susana Baca - Maria Lando" src="https://open.spotify.com/embed/track/0uwJLiXPnjZe1LkPe7k1QD?utm_source=generator" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe></div>
+            </div>
+          </article>
+          <article class="culture-column"><i data-lucide="podcast"></i><h3>听两期</h3>
+            <div class="culture-stack">
+              <div class="culture-item podcast-item"><img class="podcast-art" src="assets/peru-itinerary/culture/podcast-zhuangyouzhe.jpg" alt="《壮游者》播客封面"><div class="podcast-copy"><strong>206｜秘鲁：被看见的失落</strong><span>印加王、黄金屋、贼、马丘比丘和一碗鸡汤面 · 约110分钟</span><audio controls preload="metadata" src="https://aod.cos.tx.xmcdn.com/storages/b7ae-audiofreehighqps/3B/77/GKwRIDoKWyFOAmX5bALrWOVb.m4a">当前浏览器不支持音频播放。</audio><a class="culture-action" href="https://www.xiaoyuzhoufm.com/episode/6685da1dc37fb5387b44e3b1" target="_blank" rel="noreferrer">小宇宙节目页 ↗</a></div></div>
+              <div class="culture-item podcast-item"><img class="podcast-art" src="assets/peru-itinerary/culture/podcast-zhuangyouzhe.jpg" alt="《壮游者》播客封面"><div class="podcast-copy"><strong>210｜秘鲁：亚马逊乐园</strong><span>流量、树懒、开山刀、“高速公路”和亚马逊女战士</span><audio controls preload="metadata" src="https://aod.cos.tx.xmcdn.com/storages/5a10-audiofreehighqps/0D/98/GKwRIJIKkkjVAeGPBgL_-sRs.m4a">当前浏览器不支持音频播放。</audio><a class="culture-action" href="https://www.xiaoyuzhoufm.com/episode/66bd311b4d69961b5a722bd9" target="_blank" rel="noreferrer">小宇宙节目页 ↗</a></div></div>
+            </div>
+          </article>
+        </div>
+        <p class="culture-duration">建议节奏：飞行前读完一本书；出发前一周看一部片；把音乐留给Lima海岸，把两期播客留给长途飞行。</p>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="panel-checklist" role="tabpanel" aria-labelledby="tab-checklist" data-panel="checklist" hidden>
+      <div class="panel-inner">
+        <div class="panel-heading">
+          <div><p class="section-kicker">Ready to go · 同行自检</p><h2>把重要的事，<br>在出发前逐项划掉</h2></div>
+          <p class="lead">勾选状态会保存在当前设备。它不是报名门槛，只是防止签证、硬票、行李和健康准备在最后一周挤在一起。</p>
+        </div>
+        <div class="checklist-layout">
+          <aside class="readiness-card"><strong id="readinessPercent">0%</strong><span id="readinessCopy">还没开始，先从护照和核心预订检查。</span><div class="progress-track"><i id="readinessBar"></i></div></aside>
+          <div class="check-groups" id="checkGroups">
+            <section class="check-group"><h3>证件与保障</h3><label class="check-item"><input type="checkbox" data-check="passport"><span>护照有效期和姓名拼写已核对</span></label><label class="check-item"><input type="checkbox" data-check="visa"><span>秘鲁入境依据已确认并留存电子版</span></label><label class="check-item"><input type="checkbox" data-check="insurance"><span>旅行保险已覆盖高海拔、雨林和医疗转运</span></label><label class="check-item"><input type="checkbox" data-check="copies"><span>护照、签证、保单和紧急联系人已离线备份</span></label></section>
+            <section class="check-group"><h3>核心预订</h3><label class="check-item"><input type="checkbox" data-check="flights"><span>国际及秘鲁境内航班已出票</span></label><label class="check-item"><input type="checkbox" data-check="amazon"><span>Amazon lodge接送、寄存和活动已书面确认</span></label><label class="check-item"><input type="checkbox" data-check="machu"><span>马丘比丘Circuit 2、向导、火车和巴士已匹配</span></label><label class="check-item"><input type="checkbox" data-check="titicaca"><span>Titicaca Train、快船及湖上住宿已确认</span></label></section>
+            <section class="check-group"><h3>身体与环境</h3><label class="check-item"><input type="checkbox" data-check="clinic"><span>已咨询旅行门诊，确认疫苗和高原用药是否适合本人</span></label><label class="check-item"><input type="checkbox" data-check="altitude"><span>高原前三天按慢节奏安排，不用酒精硬撑</span></label><label class="check-item"><input type="checkbox" data-check="sunrain"><span>防晒、雨具、驱蚊和补水用品已准备</span></label><label class="check-item"><input type="checkbox" data-check="shoes"><span>已穿过的防滑步行鞋，不带全新的鞋上路</span></label></section>
+            <section class="check-group"><h3>行李与离线资料</h3><label class="check-item"><input type="checkbox" data-check="amazonbag"><span>雨林10kg左右过夜包方案已试装</span></label><label class="check-item"><input type="checkbox" data-check="sacredbag"><span>圣谷和马丘比丘小型过夜包已规划</span></label><label class="check-item"><input type="checkbox" data-check="offline"><span>机票、酒店、门票、地图和地址已下载离线版</span></label><label class="check-item"><input type="checkbox" data-check="money"><span>银行卡境外使用、少量现金和备用支付方式已确认</span></label></section>
+          </div>
         </div>
       </div>
     </section>
@@ -714,7 +1503,7 @@
   <footer class="credits">
     <div class="section-inner">
       <p>行程版本：2026-07 · 所有日期与交通均为暂定安排，最终以出票和确认订单为准。</p>
-      <p>图片来源：<a href="https://commons.wikimedia.org/wiki/File:Lima,_Peru_-_Barranco_Skyline.jpg">Lima / Avodrocc</a>、<a href="https://commons.wikimedia.org/wiki/File:Costa_Verde,_Lima,_Per%C3%BA.jpg">Costa Verde / Gabriela Acurio Giraldo</a>、<a href="https://commons.wikimedia.org/wiki/File:Amazon_rainforest_near_Puerto_Maldonado.jpg">Amazon / Ivan Mlinaric</a>、<a href="https://commons.wikimedia.org/wiki/File:Peru_-_Sacred_Valley_%26_Incan_Ruins_279_-_Moray_(8118174960).jpg">Moray / McKay Savage</a>、<a href="https://commons.wikimedia.org/wiki/File:Machu_Picchu,_Per%C3%BA,_2015-07-30,_DD_47.JPG">Machu Picchu / Diego Delso</a>、<a href="https://commons.wikimedia.org/wiki/File:Catedral,_Plaza_de_Armas,_Cusco,_Per%C3%BA,_2015-07-31,_DD_73.JPG">Cusco / Diego Delso</a>、<a href="https://commons.wikimedia.org/wiki/File:Islas_flotantes_de_los_Uros,_Lago_Titicaca,_Per%C3%BA,_2015-08-01,_DD_42.JPG">Titicaca / Diego Delso</a>、<a href="https://commons.wikimedia.org/wiki/File:Archways_of_Santa_Catalina_monastery.jpg">Arequipa / Jimmy Harris</a>。</p>
+      <p>图片来源：<a href="https://commons.wikimedia.org/wiki/File:Lima,_Peru_-_Barranco_Skyline.jpg">Lima / Avodrocc</a>、<a href="https://commons.wikimedia.org/wiki/File:Costa_Verde,_Lima,_Per%C3%BA.jpg">Costa Verde / Gabriela Acurio Giraldo</a>、<a href="https://commons.wikimedia.org/wiki/File:Amazon_rainforest_near_Puerto_Maldonado.jpg">Amazon / Ivan Mlinaric</a>、<a href="https://commons.wikimedia.org/wiki/File:Peru_-_Sacred_Valley_%26_Incan_Ruins_279_-_Moray_(8118174960).jpg">Moray / McKay Savage</a>、<a href="https://commons.wikimedia.org/wiki/File:Machu_Picchu,_Per%C3%BA,_2015-07-30,_DD_47.JPG">Machu Picchu / Diego Delso</a>、<a href="https://commons.wikimedia.org/wiki/File:Catedral,_Plaza_de_Armas,_Cusco,_Per%C3%BA,_2015-07-31,_DD_73.JPG">Cusco / Diego Delso</a>、<a href="https://commons.wikimedia.org/wiki/File:Islas_flotantes_de_los_Uros,_Lago_Titicaca,_Per%C3%BA,_2015-08-01,_DD_42.JPG">Titicaca / Diego Delso</a>、<a href="https://www.railsouthamerica.com/blog-posts/four-of-the-most-exciting-train-journeys-in-south-and-central-america">PeruRail Titicaca Train / Rails South America</a>。Arequipa为写实氛围图。</p>
     </div>
   </footer>
 
@@ -722,9 +1511,10 @@
   <script src="vendor/lucide.min.js"></script>
   <script>
     const routeMapElement = document.getElementById('routeMap');
+    let routeMap;
 
     if (window.L) {
-      const map = L.map(routeMapElement, {
+      routeMap = L.map(routeMapElement, {
         zoomControl: true,
         scrollWheelZoom: false
       });
@@ -732,9 +1522,9 @@
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18,
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      }).addTo(map);
+      }).addTo(routeMap);
 
-      L.control.scale({ imperial: false, position: 'bottomleft' }).addTo(map);
+      L.control.scale({ imperial: false, position: 'bottomleft' }).addTo(routeMap);
 
       const places = {
         lima: {
@@ -751,21 +1541,39 @@
         },
         cusco: {
           coords: [-13.53195, -71.96746],
-          order: '3',
+          order: '3/6',
           label: 'Cusco · 库斯科',
-          detail: '安第斯山城与 CUZ 机场｜本程两次经过｜约 3,399 m'
+          detail: '安第斯山城与 CUZ 机场｜9/27住宿，9/29返回｜约 3,399 m'
+        },
+        chinchero: {
+          coords: [-13.39220, -72.04780],
+          label: 'Chinchero',
+          detail: '印加梯田、殖民教堂与纺织传统｜约 3,762 m',
+          site: true
+        },
+        moray: {
+          coords: [-13.32914, -72.19710],
+          label: 'Moray',
+          detail: '同心圆农业梯田与微气候实验地｜约 3,500 m',
+          site: true
+        },
+        maras: {
+          coords: [-13.30064, -72.15514],
+          label: 'Salineras de Maras',
+          detail: '沿山谷展开的传统盐田池群｜约 3,200 m',
+          site: true
         },
         ollanta: {
           coords: [-13.25837, -72.26333],
           order: '4',
           label: 'Ollantaytambo',
-          detail: '圣谷西端古镇与马丘比丘火车换乘站｜约 2,792 m'
+          detail: '9/28住宿、遗址参观与马丘比丘火车起点｜约 2,792 m'
         },
         pueblo: {
           coords: [-13.15471, -72.52544],
           order: '5',
           label: 'Machu Picchu Pueblo',
-          detail: '又称 Aguas Calientes，遗址山脚住宿与巴士起点｜约 2,040 m'
+          detail: '又称 Aguas Calientes，9/29当日往返的巴士起点｜约 2,040 m'
         },
         citadel: {
           coords: [-13.16314, -72.54496],
@@ -773,21 +1581,27 @@
           detail: '正式游览的印加遗址，不是住宿城镇｜约 2,430 m',
           site: true
         },
-        urubamba: {
-          coords: [-13.30433, -72.11546],
-          order: '6',
-          label: 'Urubamba · 圣谷',
-          detail: '圣谷住宿与 Maras、Moray 环线基点｜约 2,871 m'
-        },
         puno: {
           coords: [-15.84022, -70.02188],
           order: '7',
           label: 'Puno · 普诺',
           detail: '的的喀喀湖门户｜约 3,827 m'
         },
+        uros: {
+          coords: [-15.81850, -69.96980],
+          order: '8',
+          label: 'Uros Floating Islands',
+          detail: '芦苇浮岛与10/1湖上住宿｜约 3,812 m'
+        },
+        taquile: {
+          coords: [-15.77050, -69.68300],
+          label: 'Taquile Island',
+          detail: '纺织传统、村落步行与湖景午餐｜约 3,950 m',
+          site: true
+        },
         arequipa: {
           coords: [-16.39889, -71.53696],
-          order: '8',
+          order: '9',
           label: 'Arequipa · 阿雷基帕',
           detail: '火山石“白城”与 AQP 机场｜约 2,335 m'
         }
@@ -802,7 +1616,7 @@
       });
 
       Object.values(places).forEach((place) => {
-        const marker = L.marker(place.coords, { icon: markerIcon(place), zIndexOffset: place.site ? 400 : 500 }).addTo(map);
+        const marker = L.marker(place.coords, { icon: markerIcon(place), zIndexOffset: place.site ? 400 : 500 }).addTo(routeMap);
         marker.bindPopup(`<strong>${place.label}</strong><span>${place.detail}<br>${place.coords[0].toFixed(5)}, ${place.coords[1].toFixed(5)}</span>`);
         marker.bindTooltip(place.label, {
           permanent: true,
@@ -815,18 +1629,19 @@
       const styles = {
         flight: { color: '#2f5e8d', weight: 3, dashArray: '9 8', opacity: .9 },
         rail: { color: '#a92727', weight: 4, opacity: .9 },
-        road: { color: '#b37917', weight: 4, opacity: .9 }
+        road: { color: '#b37917', weight: 4, opacity: .9 },
+        boat: { color: '#287f83', weight: 4, opacity: .9 }
       };
 
       const addSegment = (type, coordinates, label) => {
-        L.polyline(coordinates, styles[type]).addTo(map).bindTooltip(label, { sticky: true });
+        L.polyline(coordinates, styles[type]).addTo(routeMap).bindTooltip(label, { sticky: true });
       };
 
       addSegment('flight', [places.lima.coords, places.puerto.coords], 'LIM → PEM｜航班');
       addSegment('flight', [places.puerto.coords, places.cusco.coords], 'PEM → CUZ｜航班');
-      addSegment('road', [places.cusco.coords, places.ollanta.coords], 'Cusco → Ollantaytambo｜包车');
+      addSegment('road', [places.cusco.coords, places.chinchero.coords, places.moray.coords, places.maras.coords, places.ollanta.coords], 'Cusco → Chinchero → Moray → Maras → Ollantaytambo｜包车');
       addSegment('rail', [places.ollanta.coords, places.pueblo.coords], 'Ollantaytambo ↔ Machu Picchu Pueblo｜火车');
-      addSegment('road', [places.ollanta.coords, places.urubamba.coords, places.cusco.coords], '圣谷环线 → Cusco｜包车');
+      addSegment('road', [places.ollanta.coords, places.cusco.coords], 'Ollantaytambo → Cusco｜接站包车');
       addSegment('rail', [
         places.cusco.coords,
         [-13.67341, -71.67777],
@@ -835,18 +1650,174 @@
         [-15.49918, -70.13316],
         places.puno.coords
       ], 'Cusco → Puno｜Titicaca Train');
-      addSegment('road', [places.puno.coords, [-15.77728, -70.63694], places.arequipa.coords], 'Puno → Arequipa｜私人车');
+      addSegment('boat', [places.puno.coords, places.uros.coords, places.taquile.coords, places.uros.coords], 'Puno → Uros → Taquile → Uros｜私人快船');
+      addSegment('boat', [places.uros.coords, places.puno.coords], 'Uros → Puno｜专船');
+      addSegment('road', [places.puno.coords, [-15.77728, -70.63694], places.arequipa.coords], 'Puno → Arequipa｜长途巴士');
       addSegment('flight', [places.arequipa.coords, places.lima.coords], 'AQP → LIM｜航班');
 
       const bounds = L.latLngBounds(Object.values(places).map((place) => place.coords));
-      map.fitBounds(bounds, { padding: [46, 46] });
+      routeMap.fitBounds(bounds, { padding: [46, 46] });
     } else {
       routeMapElement.innerHTML = '<div class="map-fallback">地图组件未能载入。请联网后刷新页面；每日行程内容仍可正常查看。</div>';
     }
 
+    const tabs = [...document.querySelectorAll('.workspace-tab')];
+    const panels = [...document.querySelectorAll('.tab-panel')];
+
+    function activateTab(name, moveFocus = false) {
+      tabs.forEach((tab) => {
+        const selected = tab.dataset.tab === name;
+        tab.setAttribute('aria-selected', String(selected));
+        tab.tabIndex = selected ? 0 : -1;
+        if (selected && moveFocus) tab.focus();
+      });
+      panels.forEach((panel) => {
+        const selected = panel.dataset.panel === name;
+        panel.hidden = !selected;
+        panel.classList.toggle('is-active', selected);
+        if (selected) panel.scrollTop = 0;
+      });
+      if (name === 'highlights' && routeMap) setTimeout(() => routeMap.invalidateSize(), 80);
+      history.replaceState(null, '', `#${name}`);
+    }
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => activateTab(tab.dataset.tab));
+      tab.addEventListener('keydown', (event) => {
+        if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+        event.preventDefault();
+        let next = index;
+        if (event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
+        if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+        if (event.key === 'Home') next = 0;
+        if (event.key === 'End') next = tabs.length - 1;
+        activateTab(tabs[next].dataset.tab, true);
+      });
+    });
+
+    const requestedTab = location.hash.replace('#', '');
+    if (tabs.some((tab) => tab.dataset.tab === requestedTab)) activateTab(requestedTab);
+
+    const dayRail = document.getElementById('dayRail');
+    const dailyPages = document.querySelector('#panel-daily .daily-pages');
+    const dayChapters = [...document.querySelectorAll('#panel-daily .story-chapter')];
+
+    function activateChapter(index, moveFocus = false) {
+      const selectedChapter = dayChapters[index];
+      if (!selectedChapter) return;
+      dayChapters.forEach((chapter) => chapter.classList.toggle('is-active', chapter === selectedChapter));
+      [...dayRail.children].forEach((button, buttonIndex) => {
+        const selected = buttonIndex === index;
+        button.classList.toggle('is-active', selected);
+        button.setAttribute('aria-current', selected ? 'step' : 'false');
+        if (selected && moveFocus) button.focus();
+      });
+      if (dailyPages) dailyPages.scrollTop = 0;
+    }
+
+    dayChapters.forEach((chapter, index) => {
+      const chapterMeta = chapter.querySelector('.chapter-number')?.textContent.trim() || `CHAPTER ${String(index + 1).padStart(2, '0')}`;
+      const date = chapterMeta.split('·').pop()?.trim() || chapterMeta;
+      const title = chapter.querySelector('h2')?.textContent.replace(/\s+/g, ' ').trim() || `行程章节 ${index + 1}`;
+      const button = document.createElement('button');
+      button.className = 'day-button';
+      button.type = 'button';
+      button.innerHTML = `${date}<span>${title}</span>`;
+      button.setAttribute('aria-label', `查看 ${date} ${title}`);
+      button.addEventListener('click', () => activateChapter(index));
+      button.addEventListener('keydown', (event) => {
+        if (!['ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) return;
+        event.preventDefault();
+        let next = index;
+        if (event.key === 'ArrowUp') next = (index - 1 + dayChapters.length) % dayChapters.length;
+        if (event.key === 'ArrowDown') next = (index + 1) % dayChapters.length;
+        if (event.key === 'Home') next = 0;
+        if (event.key === 'End') next = dayChapters.length - 1;
+        activateChapter(next, true);
+      });
+      dayRail.appendChild(button);
+    });
+    activateChapter(0);
+
+    const openingOverlay = document.getElementById('openingOverlay');
+    const openingFrame = document.getElementById('openingFrame');
+    const openingEnter = document.getElementById('openingEnter');
+    const openingUrl = 'previews/peru-opening-animation.html';
+
+    function closeOpening() {
+      openingOverlay.classList.add('is-hidden');
+      sessionStorage.setItem('peru-opening-seen', 'true');
+      setTimeout(() => { if (openingOverlay.classList.contains('is-hidden')) openingFrame.src = 'about:blank'; }, 650);
+    }
+
+    function showOpening() {
+      openingFrame.src = `${openingUrl}?replay=${Date.now()}`;
+      openingOverlay.classList.remove('is-hidden');
+    }
+
+    if (sessionStorage.getItem('peru-opening-seen') === 'true' || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      openingOverlay.classList.add('is-hidden');
+      openingFrame.src = 'about:blank';
+    }
+    openingEnter.addEventListener('click', closeOpening);
+    document.getElementById('replayOpening').addEventListener('click', showOpening);
+
+    const checkboxes = [...document.querySelectorAll('[data-check]')];
+    let savedChecks = {};
+    try { savedChecks = JSON.parse(localStorage.getItem('peru-checklist') || '{}'); } catch (error) { savedChecks = {}; }
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = Boolean(savedChecks[checkbox.dataset.check]);
+      checkbox.addEventListener('change', () => {
+        savedChecks[checkbox.dataset.check] = checkbox.checked;
+        localStorage.setItem('peru-checklist', JSON.stringify(savedChecks));
+        updateReadiness();
+      });
+    });
+
+    function updateReadiness() {
+      const complete = checkboxes.filter((checkbox) => checkbox.checked).length;
+      const percent = Math.round((complete / checkboxes.length) * 100);
+      document.getElementById('readinessPercent').textContent = `${percent}%`;
+      document.getElementById('readinessBar').style.width = `${percent}%`;
+      document.getElementById('readinessCopy').textContent = percent === 100
+        ? '准备完成，可以把注意力留给旅程本身。'
+        : percent >= 60
+          ? '核心准备已过半，继续收拢硬票和离线资料。'
+          : '先从护照、保险和核心预订开始。';
+    }
+    updateReadiness();
+
     if (window.lucide) window.lucide.createIcons();
 
-    document.getElementById('printButton').addEventListener('click', () => window.print());
+    const contactDialog = document.getElementById('contactDialog');
+    document.getElementById('contactButton').addEventListener('click', () => contactDialog.showModal());
+    document.getElementById('contactClose').addEventListener('click', () => contactDialog.close());
+    contactDialog.addEventListener('click', (event) => {
+      if (event.target === contactDialog) contactDialog.close();
+    });
+
+    const printButton = document.getElementById('printButton');
+    printButton.addEventListener('click', async () => {
+      const dailyImages = [...document.querySelectorAll('#panel-daily img')];
+      dailyImages.forEach((image) => { image.loading = 'eager'; });
+
+      const imageDecodes = dailyImages.map((image) => {
+        if (typeof image.decode === 'function') return image.decode().catch(() => undefined);
+        if (image.complete) return Promise.resolve();
+        return new Promise((resolve) => {
+          image.addEventListener('load', resolve, { once: true });
+          image.addEventListener('error', resolve, { once: true });
+        });
+      });
+
+      printButton.disabled = true;
+      await Promise.race([
+        Promise.all(imageDecodes),
+        new Promise((resolve) => window.setTimeout(resolve, 2200))
+      ]);
+      printButton.disabled = false;
+      window.print();
+    });
   </script>
 </body>
 </html>
