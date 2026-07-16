@@ -16,12 +16,16 @@
     }
 
     * { box-sizing: border-box; }
-    html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+    html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: transparent; }
     body {
-      background: var(--night);
       color: var(--ivory);
       font-family: "Avenir Next", "Helvetica Neue", "PingFang SC", sans-serif;
     }
+    body:not(.animation-ready) *,
+    body:not(.animation-ready) *::before,
+    body:not(.animation-ready) *::after { animation-play-state: paused !important; }
+    .experience { opacity: 0; }
+    body.animation-ready .experience { opacity: 1; }
     button { font: inherit; }
 
     .experience {
@@ -515,6 +519,22 @@
   </style>
 </head>
 <body>
+  <script>
+    (() => {
+      const firstFrame = new Image();
+      firstFrame.src = 'shanghai-aerial-blue-hour.png';
+      const reveal = () => {
+        document.body.classList.add('animation-ready');
+        window.parent.postMessage({ type: 'peru-opening-ready' }, '*');
+      };
+      if (typeof firstFrame.decode === 'function') firstFrame.decode().then(reveal, reveal);
+      else if (firstFrame.complete) reveal();
+      else {
+        firstFrame.addEventListener('load', reveal, { once: true });
+        firstFrame.addEventListener('error', reveal, { once: true });
+      }
+    })();
+  </script>
   <main class="experience" id="experience" aria-label="从上海飞往秘鲁的开屏动画">
     <div class="destination" id="destination" aria-hidden="true">
       <div class="depth-layer depth-far"></div>

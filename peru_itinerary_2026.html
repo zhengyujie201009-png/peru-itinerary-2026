@@ -779,7 +779,9 @@
       inset: 0;
       z-index: 100;
       display: grid;
-      background: #071016;
+      background:
+        linear-gradient(180deg, rgba(2, 8, 13, .74) 0%, rgba(2, 8, 13, .18) 44%, rgba(2, 8, 13, .35) 100%),
+        url("previews/shanghai-aerial-blue-hour.png") center 56% / cover no-repeat;
       transition: opacity .55s ease, visibility .55s ease;
     }
     .opening-overlay.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
@@ -1155,7 +1157,7 @@
   </header>
 
   <div class="opening-overlay" id="openingOverlay" aria-label="秘鲁行程开场动画">
-    <iframe class="opening-frame" id="openingFrame" src="previews/peru-opening-animation.html?v=20260716-2" title="从上海飞往秘鲁的开场动画"></iframe>
+    <iframe class="opening-frame" id="openingFrame" src="previews/peru-opening-animation.html?v=20260716-3" title="从上海飞往秘鲁的开场动画"></iframe>
     <button class="opening-enter" id="openingEnter" type="button">进入行程</button>
   </div>
 
@@ -1749,7 +1751,7 @@
     const openingOverlay = document.getElementById('openingOverlay');
     const openingFrame = document.getElementById('openingFrame');
     const openingEnter = document.getElementById('openingEnter');
-    const openingUrl = 'previews/peru-opening-animation.html?v=20260716-2';
+    const openingUrl = 'previews/peru-opening-animation.html?v=20260716-3';
 
     function closeOpening() {
       openingOverlay.classList.add('is-hidden');
