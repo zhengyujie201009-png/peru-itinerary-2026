@@ -1155,7 +1155,7 @@
   </header>
 
   <div class="opening-overlay" id="openingOverlay" aria-label="秘鲁行程开场动画">
-    <iframe class="opening-frame" id="openingFrame" src="previews/peru-opening-animation.html" title="从上海飞往秘鲁的开场动画"></iframe>
+    <iframe class="opening-frame" id="openingFrame" src="previews/peru-opening-animation.html?v=20260716-2" title="从上海飞往秘鲁的开场动画"></iframe>
     <button class="opening-enter" id="openingEnter" type="button">进入行程</button>
   </div>
 
@@ -1749,7 +1749,7 @@
     const openingOverlay = document.getElementById('openingOverlay');
     const openingFrame = document.getElementById('openingFrame');
     const openingEnter = document.getElementById('openingEnter');
-    const openingUrl = 'previews/peru-opening-animation.html';
+    const openingUrl = 'previews/peru-opening-animation.html?v=20260716-2';
 
     function closeOpening() {
       openingOverlay.classList.add('is-hidden');
@@ -1758,7 +1758,7 @@
     }
 
     function showOpening() {
-      openingFrame.src = `${openingUrl}?replay=${Date.now()}`;
+      openingFrame.src = `${openingUrl}&replay=${Date.now()}`;
       openingOverlay.classList.remove('is-hidden');
     }
 
