@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>从上海到秘鲁 · 开屏动画概念</title>
+  <link rel="preload" as="image" href="shanghai-aerial-blue-hour.png">
   <style>
     :root {
       --night: #061521;
@@ -121,8 +122,8 @@
       position: absolute;
       z-index: 1;
       inset: -3%;
-      opacity: 0;
-      transform: scale(1.06);
+      opacity: 1;
+      transform: scale(1.04);
       background: url("shanghai-aerial-blue-hour.png") center 56% / cover no-repeat;
       filter: saturate(.82) contrast(1.03) brightness(.64);
       animation: shanghaiScene var(--duration) cubic-bezier(.2,.7,.2,1) both;
@@ -468,7 +469,7 @@
     .experience.finished .depth-haze { animation: none; opacity: 1; }
 
     @keyframes nightFade { 0%, 55% { opacity: 1; } 72%, 100% { opacity: 0; } }
-    @keyframes shanghaiScene { 0%, 4% { opacity: 0; transform: scale(1.075); filter: saturate(.68) contrast(1.03) brightness(.24); } 14%, 39% { opacity: 1; transform: scale(1.025); filter: saturate(.82) contrast(1.03) brightness(.64); } 55%, 100% { opacity: 0; transform: scale(1); filter: saturate(.72) contrast(1.02) brightness(.26); } }
+    @keyframes shanghaiScene { 0% { opacity: 1; transform: scale(1.04); filter: saturate(.82) contrast(1.03) brightness(.64); } 39% { opacity: 1; transform: scale(1.025); filter: saturate(.82) contrast(1.03) brightness(.64); } 55%, 100% { opacity: 0; transform: scale(1); filter: saturate(.72) contrast(1.02) brightness(.26); } }
     @keyframes earthWake { 0%, 3% { opacity: 0; transform: translate(-50%, -46%) scale(.98); } 14%, 47% { opacity: 1; transform: translate(-50%, -50%) scale(1); } 62%, 100% { opacity: 0; transform: translate(-50%, -54%) scale(1.03); } }
     @keyframes scanLine { 0%, 5% { left: 10%; opacity: 0; } 9% { opacity: 1; } 24% { left: 50%; opacity: .85; } 31%, 100% { left: 72%; opacity: 0; } }
     @keyframes cityCaption { 0%, 10% { opacity: 0; } 19%, 39% { opacity: 1; } 53%, 100% { opacity: 0; } }
