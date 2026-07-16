@@ -48,17 +48,6 @@ def build_public(source: str) -> str:
     html = source
 
     html = html.replace("<title>秘鲁旅行计划 · 2026</title>", "<title>秘鲁旅行计划 · 2026｜公开版</title>")
-    html = html.replace(
-        '<p class="hero-copy">从利马的太平洋海岸进入 Tambopata 雨林，再沿安第斯山脉穿过马丘比丘、圣谷、库斯科与的的喀喀湖，最后抵达白城 Arequipa。</p>',
-        '<p class="hero-copy">从利马的太平洋海岸进入 Tambopata 雨林，再沿安第斯山脉穿过马丘比丘、圣谷、库斯科与的的喀喀湖，最后抵达白城 Arequipa。</p><p class="public-disclosure">公开展示版 · 完整行程时间线已开放；住宿名称、地址与具体寄存地点仅向确认成员提供。</p>',
-    )
-    html = html.replace(
-        "</style>",
-        """  .public-disclosure { width: fit-content; margin: 22px 0 0; padding: 9px 12px; color: #fff; background: rgba(20, 23, 25, .58); border: 1px solid rgba(255, 255, 255, .42); font-size: 11px; font-weight: 800; letter-spacing: .02em; }
-</style>""",
-        1,
-    )
-
     story_pattern = re.compile(
         r'<div class="story-days">.*?</div>\s*</div>\s*(?=<aside)', re.S
     )
