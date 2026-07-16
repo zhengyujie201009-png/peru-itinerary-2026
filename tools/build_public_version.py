@@ -123,28 +123,6 @@ def build_public(source: str) -> str:
         "亚马逊生态营地 3天2晚",
     )
 
-    html = re.sub(
-        r'\s*<button class="workspace-tab" id="tab-checklist".*?</button>',
-        "",
-        html,
-        count=1,
-        flags=re.S,
-    )
-    html = re.sub(
-        r'\s*<section class="tab-panel" id="panel-checklist".*?</section>\s*(?=</main>)',
-        "\n",
-        html,
-        count=1,
-        flags=re.S,
-    )
-    html = re.sub(
-        r'\n\s*const checkboxes = .*?(?=\n\s*if \(window\.lucide\))',
-        "\n",
-        html,
-        count=1,
-        flags=re.S,
-    )
-
     html = html.replace(
         "既能完整查看执行细节，也能顺着图片理解旅程的情绪变化。",
         "公开版展示完整时间线与执行安排；住宿名称、地址和具体寄存地点仅向确认成员提供。",
