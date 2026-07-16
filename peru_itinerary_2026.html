@@ -87,6 +87,21 @@
       cursor: pointer;
     }
     .icon-button svg { width: 18px; height: 18px; }
+    .view-counter {
+      height: 38px;
+      min-width: 66px;
+      padding: 0 11px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      color: rgba(255, 255, 255, .9);
+      border: 1px solid rgba(255, 255, 255, .24);
+      border-radius: 4px;
+      font-variant-numeric: tabular-nums;
+      font-size: 13px;
+    }
+    .view-counter svg { width: 18px; height: 18px; }
 
     .hero {
       min-height: min(840px, 86vh);
@@ -851,6 +866,7 @@
       .wordmark { font-size: 13px; }
       .topnav .icon-button span { display: none; }
       .topnav .icon-button { width: 36px; padding: 0; justify-content: center; }
+      .view-counter { min-width: 52px; padding: 0 8px; gap: 5px; }
       .workspace-tabs { width: 100%; height: 52px; }
       .workspace-tab { min-width: 0; padding: 0 2px; font-size: 10px; }
       .workspace-tab svg { width: 14px; height: 14px; }
@@ -1111,6 +1127,10 @@
     <div class="topbar-inner">
       <span class="wordmark">PERÚ / 2026</span>
       <nav class="topnav" aria-label="页面工具">
+        <span class="view-counter" id="viewCounter" title="累计围观人数" aria-label="累计围观人数" aria-live="polite">
+          <i data-lucide="eye"></i>
+          <span id="viewCount">—</span>
+        </span>
         <button class="icon-button" id="replayOpening" type="button" title="重播开场" aria-label="重播开场动画">
           <i data-lucide="film"></i>
           <span>开场</span>
@@ -1773,6 +1793,26 @@
           : '先从护照、保险和核心预订开始。';
     }
     updateReadiness();
+
+    const viewCounter = document.getElementById('viewCounter');
+    const viewCount = document.getElementById('viewCount');
+    const isOfficialVercel = location.hostname === 'peru-itinerary-2026.vercel.app';
+    if (isOfficialVercel) {
+      const counterBase = 'https://api.counterapi.dev/v1/peru-itinerary-2026-yujie/page-views';
+      const hasCounted = localStorage.getItem('peru-view-counted-v1') === 'true';
+      fetch(`${counterBase}${hasCounted ? '' : '/up'}`)
+        .then((response) => {
+          if (!response.ok) throw new Error(`Counter returned ${response.status}`);
+          return response.json();
+        })
+        .then((result) => {
+          viewCount.textContent = Number(result.count || 0).toLocaleString('zh-CN');
+          if (!hasCounted) localStorage.setItem('peru-view-counted-v1', 'true');
+        })
+        .catch(() => { viewCount.textContent = '—'; });
+    } else {
+      viewCounter.hidden = true;
+    }
 
     if (window.lucide) window.lucide.createIcons();
 
