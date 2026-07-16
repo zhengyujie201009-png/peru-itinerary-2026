@@ -1796,11 +1796,10 @@
 
     const viewCounter = document.getElementById('viewCounter');
     const viewCount = document.getElementById('viewCount');
-    const isOfficialVercel = location.hostname === 'peru-itinerary-2026.vercel.app';
+    const isOfficialVercel = location.hostname.endsWith('.vercel.app');
     if (isOfficialVercel) {
-      const counterBase = 'https://api.counterapi.dev/v1/peru-itinerary-2026-yujie/page-views';
       const hasCounted = localStorage.getItem('peru-view-counted-v1') === 'true';
-      fetch(`${counterBase}${hasCounted ? '' : '/up'}`)
+      fetch(`/api/view-count${hasCounted ? '' : '?increment=1'}`, { cache: 'no-store' })
         .then((response) => {
           if (!response.ok) throw new Error(`Counter returned ${response.status}`);
           return response.json();
