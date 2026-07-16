@@ -3,3 +3,11 @@ peru_visa_checklist_2026.md
 peru_visa_itinerary_2026.md
 assets/peru-itinerary/central-restaurante-kitchen.jpg
 .vercel
+
+# 本地完整版：包含酒店、精确时间、寄存处和行程提醒，不上传公开仓库
+peru_itinerary_2026_private.html
+
+# Tencent Cloud EdgeOne
+.env
+.edgeone/*
+.tef_dist/*
