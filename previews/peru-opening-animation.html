@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>从上海到秘鲁 · 开屏动画概念</title>
-  <link rel="preload" as="image" href="shanghai-aerial-blue-hour.png">
+  <link rel="preload" as="image" href="shanghai-aerial-blue-hour.jpg" fetchpriority="high">
   <style>
     :root {
       --night: #061521;
@@ -128,7 +128,7 @@
       inset: -3%;
       opacity: 1;
       transform: scale(1.04);
-      background: url("shanghai-aerial-blue-hour.png") center 56% / cover no-repeat;
+      background: url("shanghai-aerial-blue-hour.jpg") center 56% / cover no-repeat;
       filter: saturate(.82) contrast(1.03) brightness(.64);
       animation: shanghaiScene var(--duration) cubic-bezier(.2,.7,.2,1) both;
     }
@@ -522,7 +522,7 @@
   <script>
     (() => {
       const firstFrame = new Image();
-      firstFrame.src = 'shanghai-aerial-blue-hour.png';
+      firstFrame.src = 'shanghai-aerial-blue-hour.jpg';
       const reveal = () => {
         document.body.classList.add('animation-ready');
         window.parent.postMessage({ type: 'peru-opening-ready' }, '*');
